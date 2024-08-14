@@ -1,27 +1,39 @@
-import Image from "next/image";
+import { Card } from "@/components/ui/card";
+import UnderwaterBackground from "@/components/underwater";
+import { StarFilledIcon } from "@radix-ui/react-icons";
 
 export default function Home() {
-  return (
+	return (
+		// skipcq: JS-0415
 		<main>
+			<div className="relative min-h-screen">
+				<UnderwaterBackground />
+				<div className="absolute inset-0 flex items-center justify-end mr-[10%]">
+					<Card className="z-10">
+						<h1 className="mb-4 text-4xl font-bold">Your Plumbing Company</h1>
+						<p className="text-xl">We deliver quality service, every time</p>
+					</Card>
+				</div>
+			</div>
 			<section className="relative">
 				<div className="container px-4 mx-auto">
 					<div className="flex flex-wrap items-center justify-between gap-4">
 						<div className="md:w-7/12">
 							<ul className="flex mb-0 space-x-1 list-inline">
 								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-fill"></i>
+									<StarFilledIcon className="text-yellow-500" />
 								</li>
 								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-fill"></i>
+									<StarFilledIcon className="text-yellow-500" />
 								</li>
 								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-fill"></i>
+									<StarFilledIcon className="text-yellow-500" />
 								</li>
 								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-fill"></i>
+									<StarFilledIcon className="text-yellow-500" />
 								</li>
 								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-half"></i>
+									<StarFilledIcon className="text-yellow-500" />
 								</li>
 								<li className="inline-block font-normal text-gray-700">Trusted by 1K+ industry leaders</li>
 							</ul>
@@ -154,5 +166,5 @@ export default function Home() {
 				</div>
 			</section>
 		</main>
-  );
+	);
 }
