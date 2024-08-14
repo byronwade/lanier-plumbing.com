@@ -1,31 +1,49 @@
-import Link from "next/link";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import UnderwaterBackground from "@/components/underwater";
+import { StarFilledIcon } from "@radix-ui/react-icons";
 
 export default function Home() {
 	return (
-		<div className="flex flex-col min-h-[100dvh]">
-			<main className="flex-1">
-				<section className="w-full py-12 md:py-24 lg:py-32">
-					<div className="container px-4 md:px-6">
-						<div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_550px]">
-							<div className="flex flex-col justify-center space-y-4">
-								<div className="space-y-2">
-									<h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl/none">Reliable Plumbing Services</h1>
-									<p className="max-w-[600px] text-muted-foreground md:text-xl">Acme Plumbing provides top-quality plumbing services for residential and commercial clients. Our experienced team is dedicated to ensuring your plumbing needs are met efficiently and effectively.</p>
-								</div>
-								<div className="flex flex-col gap-2 min-[400px]:flex-row">
-									<Link href="#" className="inline-flex items-center justify-center h-10 px-8 text-sm font-medium transition-colors rounded-md shadow bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" prefetch={false}>
-										Schedule Service
-									</Link>
-									<Link href="#" className="inline-flex items-center justify-center h-10 px-8 text-sm font-medium transition-colors border rounded-md shadow-sm border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" prefetch={false}>
-										Learn More
-									</Link>
-								</div>
-							</div>
-							<img src="/placeholder.svg" width="550" height="550" alt="Hero" className="object-cover mx-auto overflow-hidden aspect-video rounded-xl sm:w-full lg:order-last lg:aspect-square" />
+		// skipcq: JS-0415
+		<main>
+			<div className="relative min-h-screen">
+				<UnderwaterBackground />
+				<div className="absolute inset-0 flex items-center justify-end mr-[10%]">
+					<Card className="z-10">
+						<h1 className="mb-4 text-4xl font-bold">Your Plumbing Company</h1>
+						<p className="text-xl">We deliver quality service, every time</p>
+					</Card>
+				</div>
+			</div>
+			<section className="relative">
+				<section className="container px-4 mx-auto">
+					<div className="flex flex-wrap items-center justify-between gap-4">
+						<div className="md:w-7/12">
+							<ul className="flex mb-0 space-x-1 list-inline">
+								<li className="inline-block">
+									<StarFilledIcon className="text-yellow-500" />
+								</li>
+								<li className="inline-block">
+									<StarFilledIcon className="text-yellow-500" />
+								</li>
+								<li className="inline-block">
+									<StarFilledIcon className="text-yellow-500" />
+								</li>
+								<li className="inline-block">
+									<StarFilledIcon className="text-yellow-500" />
+								</li>
+								<li className="inline-block">
+									<StarFilledIcon className="text-yellow-500" />
+								</li>
+								<li className="inline-block font-normal text-gray-700">Trusted by 1K+ industry leaders</li>
+							</ul>
+
+							<h1 className="my-3">Testimonials</h1>
+							<p className="mb-0 lead">Don&apos;t go with our words only. Hear some of the reviews our clients have to say about what it&apos;s like to work with our team.</p>
+						</div>
+
+						<div className="text-right md:w-5/12">
+							<i className="text-6xl text-blue-600 opacity-25 bi bi-chat-left-quote"></i>
 						</div>
 					</div>
 				</section>
@@ -89,41 +107,7 @@ export default function Home() {
 						</div>
 					</div>
 				</section>
-				<section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-					<div className="container px-4 md:px-6">
-						<div className="flex flex-col items-center justify-center space-y-4 text-center">
-							<div className="space-y-2">
-								<div className="inline-block px-3 py-1 text-sm rounded-lg bg-muted">Contact Us</div>
-								<h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Get in Touch</h2>
-								<p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">Fill out the form below to schedule a service appointment or to ask any questions about our plumbing services.</p>
-							</div>
-						</div>
-						<div className="w-full max-w-md pt-8 mx-auto space-y-4">
-							<form className="space-y-2">
-								<div className="space-y-1">
-									<Label htmlFor="name">Name</Label>
-									<Input id="name" required />
-								</div>
-								<div className="space-y-1">
-									<Label htmlFor="email">Email</Label>
-									<Input id="email" type="email" required />
-								</div>
-								<div className="space-y-1">
-									<Label htmlFor="phone">Phone</Label>
-									<Input id="phone" type="tel" required />
-								</div>
-								<div className="space-y-1">
-									<Label htmlFor="message">Message</Label>
-									<Textarea id="message" rows={4} required />
-								</div>
-								<Button type="submit" className="w-full">
-									Submit
-								</Button>
-							</form>
-						</div>
-					</div>
-				</section>
-			</main>
-		</div>
+			</section>
+		</main>
 	);
 }
