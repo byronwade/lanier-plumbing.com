@@ -1,158 +1,129 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  return (
-		<main>
-			<section className="relative">
-				<div className="container px-4 mx-auto">
-					<div className="flex flex-wrap items-center justify-between gap-4">
-						<div className="md:w-7/12">
-							<ul className="flex mb-0 space-x-1 list-inline">
-								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-fill"></i>
-								</li>
-								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-fill"></i>
-								</li>
-								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-fill"></i>
-								</li>
-								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-fill"></i>
-								</li>
-								<li className="inline-block">
-									<i className="text-yellow-500 bi bi-star-half"></i>
-								</li>
-								<li className="inline-block font-normal text-gray-700">Trusted by 1K+ industry leaders</li>
-							</ul>
-
-							<h1 className="my-3">Testimonials</h1>
-							<p className="mb-0 lead">Don&apos;t go with our words only. Hear some of the reviews our clients have to say about what it&apos;s like to work with our team.</p>
-						</div>
-
-						<div className="text-right md:w-5/12">
-							<i className="text-6xl text-blue-600 opacity-25 bi bi-chat-left-quote"></i>
+	return (
+		<div className="flex flex-col min-h-[100dvh]">
+			<main className="flex-1">
+				<section className="w-full py-12 md:py-24 lg:py-32">
+					<div className="container px-4 md:px-6">
+						<div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_550px]">
+							<div className="flex flex-col justify-center space-y-4">
+								<div className="space-y-2">
+									<h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl/none">Reliable Plumbing Services</h1>
+									<p className="max-w-[600px] text-muted-foreground md:text-xl">Acme Plumbing provides top-quality plumbing services for residential and commercial clients. Our experienced team is dedicated to ensuring your plumbing needs are met efficiently and effectively.</p>
+								</div>
+								<div className="flex flex-col gap-2 min-[400px]:flex-row">
+									<Link href="#" className="inline-flex items-center justify-center h-10 px-8 text-sm font-medium transition-colors rounded-md shadow bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" prefetch={false}>
+										Schedule Service
+									</Link>
+									<Link href="#" className="inline-flex items-center justify-center h-10 px-8 text-sm font-medium transition-colors border rounded-md shadow-sm border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" prefetch={false}>
+										Learn More
+									</Link>
+								</div>
+							</div>
+							<img src="/placeholder.svg" width="550" height="550" alt="Hero" className="object-cover mx-auto overflow-hidden aspect-video rounded-xl sm:w-full lg:order-last lg:aspect-square" />
 						</div>
 					</div>
-				</div>
-			</section>
-
-			<section className="relative pt-0">
-				<div className="container px-4 mx-auto">
-					<div className="flex flex-wrap gap-4" data-isotope='{ "layoutMode": "masonry" }'>
-						<div className="md:w-1/2">
-							<div className="p-4 bg-gray-100 rounded-lg card">
-								<div className="flex items-center mb-4">
-									<div className="w-16 h-16 avatar">
-										<img src="assets/images/avatar/02.jpg" className="rounded-full" alt="" />
-									</div>
-									<div className="ml-2">
-										<h6 className="mb-1">Louis Crawford</h6>
-										<p className="mb-0">CEO, Google INC</p>
-									</div>
-								</div>
-								<p className="lead">A nice touch of creativity, easy to use, especially bootstrap 5. I love this, good work team!</p>
-								<div className="flex justify-between mt-4">
-									<img src="assets/images/client/google.svg" className="w-1/4" alt="" />
-									<a href="#" className="mb-0 text-gray-700 btn btn-link">
-										View project
-									</a>
-								</div>
+				</section>
+				<section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+					<div className="container px-4 md:px-6">
+						<div className="flex flex-col items-center justify-center space-y-4 text-center">
+							<div className="space-y-2">
+								<div className="inline-block px-3 py-1 text-sm rounded-lg bg-muted">Expertise</div>
+								<h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Trusted Plumbing Experts</h2>
+								<p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">Acme Plumbing has been providing top-quality plumbing services for over 20 years. Our team of licensed and certified plumbers are experts in their field, ensuring your plumbing needs are met with the utmost care and professionalism.</p>
 							</div>
 						</div>
-
-						<div className="md:w-1/2">
-							<div className="p-4 bg-gray-100 rounded-lg card">
-								<div className="flex items-center mb-4">
-									<div className="w-16 h-16 avatar">
-										<img src="assets/images/avatar/01.jpg" className="rounded-full" alt="" />
-									</div>
-									<div className="ml-2">
-										<h6 className="mb-1">Amanda Reed</h6>
-										<p className="mb-0">Education minister, Algolia</p>
-									</div>
+						<div className="grid items-center max-w-5xl gap-6 py-12 mx-auto lg:grid-cols-2 lg:gap-12">
+							<div className="flex flex-col justify-center space-y-4">
+								<div className="space-y-2">
+									<h3 className="text-2xl font-bold">Certifications</h3>
+									<p className="text-muted-foreground">Our plumbers are licensed and certified by the state to ensure the highest level of quality and safety. We are also members of the National Plumbing Contractors Association and the Better Business Bureau.</p>
 								</div>
-								<p className="lead">The theme has done very well. 5 stars! Efficient support. Support responds immediately and solves all problems! Good Job!</p>
-								<div className="relative mt-4 aspect-w-21 aspect-h-9">
-									<iframe className="rounded-lg" width="560" height="350" src="https://www.youtube.com/embed/24zI3oD9wtw?controls=0" frameBorder="0" allow="auto-play"></iframe>
-								</div>
-								<div className="flex justify-between mt-4">
-									<img src="assets/images/client/algolia-.svg" className="w-1/4" alt="" />
-									<a href="#" className="mb-0 text-gray-700 btn btn-link">
-										View project
-									</a>
+								<div className="grid grid-cols-2 gap-4">
+									<img src="/placeholder.svg" width="100" height="100" alt="Certification 1" className="object-contain aspect-square" />
+									<img src="/placeholder.svg" width="100" height="100" alt="Certification 2" className="object-contain aspect-square" />
+									<img src="/placeholder.svg" width="100" height="100" alt="Certification 3" className="object-contain aspect-square" />
+									<img src="/placeholder.svg" width="100" height="100" alt="Certification 4" className="object-contain aspect-square" />
 								</div>
 							</div>
+							<img src="/placeholder.svg" width="550" height="310" alt="Certifications" className="object-cover object-center mx-auto overflow-hidden aspect-video rounded-xl sm:w-full lg:order-last" />
 						</div>
-
-						<div className="md:w-1/2">
-							<div className="p-4 text-white bg-gray-800 rounded-lg card">
-								<div className="flex items-center mb-4">
-									<div className="w-16 h-16 avatar">
-										<img src="assets/images/avatar/05.jpg" className="rounded-full" alt="" />
-									</div>
-									<div className="ml-2">
-										<h6 className="mb-1 text-white">Joan Wallace</h6>
-										<p className="mb-0 text-white">Sr. Developer, Android</p>
-									</div>
-								</div>
-								<p className="text-white lead">Awesome theme. Very clean and organized code, very easy for inexperienced users like me to design with it. Great and fast support. Answering questions even on Sundays. Big thanks to the Webestica team</p>
-								<div className="flex justify-between mt-4">
-									<img src="assets/images/client/android-.svg" className="w-1/4" alt="" />
-									<a href="#" className="mb-0 text-white btn btn-link">
-										View project
-									</a>
-								</div>
+					</div>
+				</section>
+				<section className="w-full py-12 md:py-24 lg:py-32">
+					<div className="container px-4 md:px-6">
+						<div className="flex flex-col items-center justify-center space-y-4 text-center">
+							<div className="space-y-2">
+								<div className="inline-block px-3 py-1 text-sm rounded-lg bg-muted">Our Team</div>
+								<h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Meet Our Experienced Plumbers</h2>
+								<p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">Our team of licensed and certified plumbers have years of experience in the industry, ensuring your plumbing needs are met with the highest level of expertise and professionalism.</p>
 							</div>
 						</div>
-
-						<div className="md:w-1/2">
-							<div className="p-4 bg-gray-100 rounded-lg card">
-								<div className="flex items-center mb-4">
-									<div className="w-16 h-16 avatar">
-										<img src="assets/images/avatar/02.jpg" className="rounded-full" alt="" />
-									</div>
-									<div className="ml-2">
-										<h6 className="mb-1">Samuel Bishop</h6>
-										<p className="mb-0">Director, Envato</p>
-									</div>
-								</div>
-								<p className="mb-0 lead">I have already 4 purchases of 4 different themes here, And this Folio theme is the best:</p>
-								<p className="mb-0 lead">1. It has a very modern, beautiful, emotional design. I like modern, but a lot of modern themes always seem to be a little bit rude because, many developers often lose &quot;beauty details&quot; on it, but here is they didn&apos;t. Yeah, I know this is subjective, but emotion is about yes or no.</p>
-								<p className="mb-0 lead">2. It is easy to built in components</p>
-								<p className="mb-0 lead">3. Support is fantastically operational.</p>
-								<div className="flex justify-between mt-4">
-									<img src="assets/images/client/envato.svg" className="w-1/4" alt="" />
-									<a href="#" className="mb-0 text-gray-700 btn btn-link">
-										View project
-									</a>
+						<div className="grid items-center max-w-5xl gap-6 py-12 mx-auto lg:grid-cols-3 lg:gap-8">
+							<div className="flex flex-col items-center justify-center space-y-2">
+								<img src="/placeholder.svg" width="120" height="120" alt="John Doe" className="rounded-full" style={{ aspectRatio: "120/120", objectFit: "cover" }} />
+								<div className="text-center">
+									<h3 className="text-lg font-bold">John Doe</h3>
+									<p className="text-muted-foreground">Master Plumber</p>
 								</div>
 							</div>
-						</div>
-
-						<div className="md:w-1/2">
-							<div className="p-4 bg-gray-100 rounded-lg card">
-								<div className="flex items-center mb-4">
-									<div className="w-16 h-16 avatar">
-										<img src="assets/images/avatar/04.jpg" className="rounded-full" alt="" />
-									</div>
-									<div className="ml-2">
-										<h6 className="mb-1">Billy Vasquez</h6>
-										<p className="mb-0">Marketing Manager, Netflix</p>
-									</div>
+							<div className="flex flex-col items-center justify-center space-y-2">
+								<img src="/placeholder.svg" width="120" height="120" alt="Jane Smith" className="rounded-full" style={{ aspectRatio: "120/120", objectFit: "cover" }} />
+								<div className="text-center">
+									<h3 className="text-lg font-bold">Jane Smith</h3>
+									<p className="text-muted-foreground">Journeyman Plumber</p>
 								</div>
-								<p className="lead">I bought this website template and I wasn&apos;t sure if I can handle it (it was my first template :) ) so I had some problems starting with some technical issues (from my side). But the support is one of the best I have ever seen. they are very kind to customers and help to fix a problem.... until it&apos;s fixed! Now everything is fine and I will buy the next templates only from here, cause they help until it runs :)</p>
-								<div className="flex justify-between mt-4">
-									<img src="assets/images/client/netflix.svg" className="w-1/4" alt="" />
-									<a href="#" className="mb-0 text-gray-700 btn btn-link">
-										View project
-									</a>
+							</div>
+							<div className="flex flex-col items-center justify-center space-y-2">
+								<img src="/placeholder.svg" width="120" height="120" alt="Bob Johnson" className="rounded-full" style={{ aspectRatio: "120/120", objectFit: "cover" }} />
+								<div className="text-center">
+									<h3 className="text-lg font-bold">Bob Johnson</h3>
+									<p className="text-muted-foreground">Apprentice Plumber</p>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</section>
-		</main>
-  );
+				</section>
+				<section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+					<div className="container px-4 md:px-6">
+						<div className="flex flex-col items-center justify-center space-y-4 text-center">
+							<div className="space-y-2">
+								<div className="inline-block px-3 py-1 text-sm rounded-lg bg-muted">Contact Us</div>
+								<h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Get in Touch</h2>
+								<p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">Fill out the form below to schedule a service appointment or to ask any questions about our plumbing services.</p>
+							</div>
+						</div>
+						<div className="w-full max-w-md pt-8 mx-auto space-y-4">
+							<form className="space-y-2">
+								<div className="space-y-1">
+									<Label htmlFor="name">Name</Label>
+									<Input id="name" required />
+								</div>
+								<div className="space-y-1">
+									<Label htmlFor="email">Email</Label>
+									<Input id="email" type="email" required />
+								</div>
+								<div className="space-y-1">
+									<Label htmlFor="phone">Phone</Label>
+									<Input id="phone" type="tel" required />
+								</div>
+								<div className="space-y-1">
+									<Label htmlFor="message">Message</Label>
+									<Textarea id="message" rows={4} required />
+								</div>
+								<Button type="submit" className="w-full">
+									Submit
+								</Button>
+							</form>
+						</div>
+					</div>
+				</section>
+			</main>
+		</div>
+	);
 }
