@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import UnderwaterBackground from "@/components/underwater";
 import { StarFilledIcon } from "@radix-ui/react-icons";
 
@@ -10,8 +11,148 @@ export default function Home() {
 				<UnderwaterBackground />
 				<div className="absolute inset-0 flex items-center justify-end mr-[10%]">
 					<Card className="z-10">
-						<h1 className="mb-4 text-4xl font-bold">Your Plumbing Company</h1>
-						<p className="text-xl">We deliver quality service, every time</p>
+						<div className="z-10 max-w-screen-sm p-4 bg-white rounded ustify-center lg:mt-0 lg:col-span-5 xl:col-span-4 sm:p-6 lg:p-8 dark:bg-gray-800">
+  <form
+    className="lg:flex-auto"
+    data-np-autofill-form-type="identity"
+    data-np-checked={1}
+    data-np-watching={1}
+  >
+    <input
+      type="text"
+      id="pathname"
+      className="hidden"
+      name="pathname"
+      defaultValue="/"
+    />
+    <div className="grid grid-cols-1 gap-y-4 gap-x-4 sm:grid-cols-2">
+      <div>
+        <label
+          htmlFor="full-name"
+          className="block text-sm font-semibold leading-6 text-gray-900"
+        >
+          Full name
+        </label>
+        <div className="mt-2.5">
+          <input
+            placeholder="Mario Mario"
+            required=""
+            type="text"
+            id="full-name"
+            autoComplete="off"
+            className="block w-full rounded border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 text-base sm:leading-6"
+            name="full-name"
+            data-np-autofill-field-type="fullName"
+            data-np-uid="0d754394-70f9-4101-aa0d-d81b0ae228be"
+          />
+          <nordpass-icon data-np-uid="0d754394-70f9-4101-aa0d-d81b0ae228be" />
+        </div>
+      </div>
+      <div>
+        <label
+          htmlFor="phone"
+          className="block text-sm font-semibold leading-6 text-gray-900"
+        >
+          Phone
+        </label>
+        <div className="mt-2.5">
+          <input
+            autoComplete="off"
+            placeholder="831-225-4344"
+            required=""
+            id="phone"
+            type="text"
+            className="block w-full rounded border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 text-base sm:leading-6"
+            name="phone"
+            data-np-autofill-field-type="phone"
+            data-np-uid="999994d7-75c1-4d24-ab5a-96fd3f825a97"
+          />
+          <nordpass-icon data-np-uid="999994d7-75c1-4d24-ab5a-96fd3f825a97" />
+        </div>
+      </div>
+      <div>
+        <label
+          htmlFor="email"
+          className="block text-sm font-semibold leading-6 text-gray-900"
+        >
+          Email
+        </label>
+        <div className="mt-2.5">
+          <input
+            autoComplete="off"
+            placeholder="support@wadesinc.io"
+            required=""
+            id="email"
+            type="text"
+            className="block w-full rounded border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 text-base sm:leading-6"
+            name="email"
+            data-np-autofill-field-type="email"
+            data-np-uid="f8302c1f-441f-4b0e-af27-8a88d0d50def"
+          />
+          <nordpass-icon data-np-uid="f8302c1f-441f-4b0e-af27-8a88d0d50def" />
+        </div>
+      </div>
+      <div>
+        <label
+          htmlFor="address"
+          className="block text-sm font-semibold leading-6 text-gray-900"
+        >
+          Address
+        </label>
+        <div className="mt-2.5">
+          <input
+            placeholder="Mashroom Kingdom"
+            autoComplete="off"
+            required=""
+            id="address"
+            type="text"
+            className="block w-full rounded border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 text-base sm:leading-6"
+            name="address"
+            data-np-autofill-field-type="address"
+            data-np-uid="ca48c282-5ec3-420c-8aed-73c1407da204"
+          />
+          <nordpass-icon data-np-uid="ca48c282-5ec3-420c-8aed-73c1407da204" />
+        </div>
+      </div>
+      <div className="sm:col-span-2">
+        <label
+          htmlFor="message"
+          className="block text-sm font-semibold leading-6 text-gray-900"
+        >
+          Message
+        </label>
+        <div className="mt-2.5">
+          <textarea
+            placeholder="Tell us sbout your project..."
+            required=""
+            id="message"
+            name="message"
+            rows={4}
+            className="block w-full rounded border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 text-base sm:leading-6"
+            data-np-intersection-state="visible"
+            defaultValue={""}
+          />
+        </div>
+      </div>
+    </div>
+    <div className="mt-4">
+      <Button>
+        Get a Quote
+      </Button>
+    </div>
+    <p className="mt-4 text-sm leading-6 text-gray-700">
+      By submitting this form, I agree to the{/* */}{" "}
+      <a
+        className="font-medium text-brand-700 dark:text-brand-500 hover:underline"
+        href="/about-us/privacy-policy"
+      >
+        privacy policy
+      </a>
+      .
+    </p>
+  </form>
+</div>
+
 					</Card>
 				</div>
 			</div>
