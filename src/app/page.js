@@ -157,6 +157,7 @@ export default function Home() {
 				</div>
 			</div>
 			<section className="relative">
+
 				<section className="container px-4 mx-auto">
 					<div className="flex flex-wrap items-center justify-between gap-4">
 						<div className="md:w-7/12">
