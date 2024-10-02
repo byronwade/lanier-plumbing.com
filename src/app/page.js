@@ -39,7 +39,7 @@ export default function VIPUnderConstruction() {
               Coming Soon
             </h2>
             <p className="text-lg text-gray-300">
-              <Link href="https://www.byronwade.com">Wade's Media</Link> is crafting a digital experience as refined as our plumbing services. Our new website will be unveiled shortly.
+              <Link href="https://www.byronwade.com">Wade&apos;s Media</Link> is crafting a digital experience as refined as our plumbing services. Our new website will be unveiled shortly.
             </p>
           </motion.div>
 
