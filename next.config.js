@@ -21,6 +21,16 @@ const nextConfig = {
 	pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
 	// Optionally, add any other Next.js config below
 	reactStrictMode: true,
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'placehold.co',
+			},
+		],
+		dangerouslyAllowSVG: true,
+		contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+	},
 };
 
 // Merge MDX config with Next.js config

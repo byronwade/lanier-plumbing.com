@@ -1,0 +1,10 @@
+{
+	"title": "My Website",
+	"description": "This is my website using Next.js and MDX.",
+	"navLinks": [
+		{ "name": "Home", "path": "/" },
+		{ "name": "Services", "path": "/services" },
+		{ "name": "Expert TIps", "path": "/expert-tips" },
+		{ "name": "Projects", "path": "/projects" }
+	]
+}

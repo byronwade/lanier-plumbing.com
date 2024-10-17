@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	darkMode: ["class"],
-	content: ["./pages/**/*.{js,jsx}", "./components/**/*.{js,jsx}", "./app/**/*.{js,jsx}", "./src/**/*.{js,jsx}"],
+	content: [
+		"./app/**/*.{js,ts,jsx,tsx,mdx}",
+		"./components/**/*.{js,ts,jsx,tsx,mdx}",
+	],
 	prefix: "",
 	theme: {
 		container: {
@@ -9,8 +12,8 @@ module.exports = {
 			padding: "2rem",
 			screens: {
 				"2xl": "1400px",
+				},
 			},
-		},
 		extend: {
 			colors: {
 				border: "hsl(var(--border))",
