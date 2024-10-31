@@ -4,10 +4,13 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
+// Optimize font loading
 const inter = Inter({
 	subsets: ["latin"],
 	display: "swap",
 	preload: true,
+	fallback: ["system-ui", "arial"],
+	adjustFontFallback: true,
 });
 
 export const metadata = {
