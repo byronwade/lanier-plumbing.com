@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { Phone, Clock, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -54,9 +55,9 @@ export function FooterCTA() {
 						<Phone className="w-6 h-6 mr-2" />
 						Call (555) 123-4567
 					</Button>
-					<a href="/contact-lanier-plumbing" className="mt-2 text-sm text-red-600 underline hover:text-red-800">
+					<Link href="/contact-lanier-plumbing" className="mt-2 text-sm text-red-600 underline hover:text-red-800">
 						Contact Us
-					</a>
+					</Link>
 				</div>
 			</div>
 		</section>

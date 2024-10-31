@@ -31,7 +31,7 @@ export default function Hero() {
 				</div>
 			</div>
 			<div className="absolute inset-y-0 top-0 right-0 w-full h-full lg:w-1/2">
-				<Image className="object-cover w-full h-full" src="/hero-image.jpg" alt="Plumber working on pipes" layout="fill" objectFit="cover" priority />
+				<Image className="object-cover w-full h-full" src="/hero-image.webp" alt="Plumber working on pipes" priority width={800} height={600} />
 			</div>
 		</section>
 	);
