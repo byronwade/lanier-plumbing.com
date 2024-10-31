@@ -1,164 +1,100 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Droplet, Wrench, Users, DollarSign, Award, CheckCircle, Building, Home, Hotel, Hospital } from "lucide-react";
-import Image from "next/image";
-
-export default function ArtisticAboutUs() {
-	const [scrollY, setScrollY] = useState(0);
-
-	useEffect(() => {
-		const handleScroll = () => setScrollY(window.scrollY);
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
-
-	return (
-		<div className="min-h-screen overflow-hidden text-gray-800 bg-gradient-to-br from-white via-red-50 to-red-100">
-			<main className="relative">
-				<div className="absolute inset-0 overflow-hidden pointer-events-none">
-					<motion.div
-						className="absolute left-0 w-64 h-64 top-1/4 opacity-20"
-						animate={{
-							x: [0, 100, 0],
-							y: [0, -50, 0],
-							rotate: [0, 180, 360],
-						}}
-						transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-					>
-						<Image src="/placeholder.svg" alt="Floating shape" width={256} height={256} className="rounded-full" />
-					</motion.div>
-					<motion.div
-						className="absolute right-0 w-48 h-48 top-3/4 opacity-20"
-						animate={{
-							x: [0, -80, 0],
-							y: [0, 60, 0],
-							rotate: [0, -180, -360],
-						}}
-						transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-					>
-						<Image src="/placeholder.svg" alt="Floating shape" width={192} height={192} className="rounded-full" />
-					</motion.div>
-				</div>
-
-				<section id="about" className="relative flex items-center justify-center min-h-screen py-20">
-					<motion.div
-						className="absolute inset-0 flex items-center justify-center opacity-5"
-						style={{
-							fontSize: `${Math.min(200 + scrollY * 0.1, 400)}px`,
-							transform: `translateY(${scrollY * 0.5}px)`,
-						}}
-					>
-						<Droplet className="text-red-300" />
-					</motion.div>
-					<div className="container z-10 px-6 mx-auto">
-						<motion.h2 className="mb-8 font-bold text-center text-transparent text-8xl bg-clip-text bg-gradient-to-r from-red-600 to-red-800" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-							About Us
-						</motion.h2>
-						<motion.p className="max-w-3xl mx-auto text-xl leading-relaxed text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
-							At Lanier Plumbing Services LLC, we&apos;ve built our reputation on being the humble plumber—the company you can count on to get the job done right without any fuss. For years, we&apos;ve been the go-to choice for commercial plumbing across Georgia, quietly delivering top-quality work on projects ranging from fire stations to major civil infrastructure.
-						</motion.p>
-					</div>
-				</section>
-
-				<section id="impact" className="relative flex items-center justify-center min-h-screen py-20 overflow-hidden">
-					<div className="container z-10 px-6 mx-auto">
-						<h3 className="mb-16 text-5xl font-bold text-center text-red-800">Our Impact</h3>
-						<div className="relative">
-							<motion.div className="absolute inset-0 bg-red-200 rounded-3xl" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }} />
-							<div className="relative grid grid-cols-1 gap-8 p-8 md:grid-cols-3">
-								{[
-									{ icon: DollarSign, value: "$10M+", label: "Generated Last Year", description: "Our commitment to quality has led to significant financial growth, allowing us to invest in cutting-edge technology and training." },
-									{ icon: Wrench, value: "100s", label: "Projects Completed", description: "From small residential fixes to large-scale commercial installations, weve successfully tackled a diverse range of plumbing challenges." },
-									{ icon: Users, value: "1000s", label: "Satisfied Customers", description: "Our dedication to exceptional service has earned us a loyal customer base and numerous referrals across Georgia." },
-								].map((item, index) => (
-									<motion.div key={index} className="p-6 bg-white shadow-lg rounded-2xl" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.2 }}>
-										<div className="flex items-center mb-4">
-											<div className="p-3 mr-4 bg-red-100 rounded-full">
-												<item.icon size={24} className="text-red-600" />
-											</div>
-											<div>
-												<p className="text-4xl font-bold text-red-700">{item.value}</p>
-												<p className="text-lg text-gray-600">{item.label}</p>
-											</div>
-										</div>
-										<p className="text-gray-700">{item.description}</p>
-									</motion.div>
-								))}
-							</div>
-						</div>
-						<motion.div className="mt-12 text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
-							<p className="text-xl text-gray-700">Our impact goes beyond numbers. We&apos;re proud to contribute to the safety, comfort, and efficiency of countless homes and businesses across Georgia.</p>
-						</motion.div>
-					</div>
-				</section>
-
-				<section id="expertise" className="relative flex items-center justify-center min-h-screen py-20">
-					<div className="container z-10 px-6 mx-auto">
-						<h3 className="mb-16 text-5xl font-bold text-center text-red-800">Our Expertise</h3>
-						<p className="max-w-3xl mx-auto mb-12 text-xl text-center">Our expertise spans a wide range of projects and industries. Here are just a few examples of the diverse areas where we excel:</p>
-						<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-							{[
-								{ icon: Building, title: "Fire Stations", description: "Ensuring safety with top-notch plumbing systems" },
-								{ icon: Home, title: "Multi-Home Units", description: "Efficient solutions for residential complexes" },
-								{ icon: Hotel, title: "Hotels", description: "Luxury plumbing for hospitality excellence" },
-								{ icon: Hospital, title: "Hospitals", description: "Critical systems for healthcare facilities" },
-							].map((item, index) => (
-								<motion.div key={index} className="flex flex-col items-center text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
-									<item.icon size={48} className="mb-4 text-red-600" />
-									<h4 className="mb-2 text-xl font-bold text-red-700">{item.title}</h4>
-									<p className="text-gray-700">{item.description}</p>
-								</motion.div>
-							))}
-						</div>
-					</div>
-				</section>
-
-				<section id="services" className="relative flex items-center justify-center min-h-screen py-20">
-					<div className="container z-10 px-6 mx-auto">
-						<h3 className="mb-16 text-5xl font-bold text-center text-red-800">Our Comprehensive Services</h3>
-						<p className="max-w-3xl mx-auto mb-12 text-xl text-center">At Lanier Plumbing, we offer a wide array of services to meet all your plumbing needs. Our expertise extends far beyond the examples above, covering everything from routine maintenance to complex installations:</p>
-						<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-							{["Commercial Plumbing", "Residential Plumbing", "Emergency Repairs", "Water Heater Installation", "Pipe Replacement", "Drain Cleaning", "Sewer Line Services", "Gas Line Installation", "Bathroom Remodeling", "Kitchen Plumbing", "Backflow Prevention", "Water Treatment Systems", "HVAC Integration", "Industrial Plumbing", "Green Plumbing Solutions"].map((service, index) => (
-								<motion.div key={index} className="flex items-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
-									<CheckCircle className="mr-2 text-red-600" />
-									<span className="text-lg text-gray-800">{service}</span>
-								</motion.div>
-							))}
-						</div>
-					</div>
-				</section>
-
-				<section id="team" className="relative flex items-center justify-center min-h-screen py-20 overflow-hidden">
-					<div className="container z-10 px-6 mx-auto">
-						<h3 className="mb-16 text-5xl font-bold text-center text-red-800">Our Team</h3>
-						<div className="grid grid-cols-1 gap-12 md:grid-cols-3">
-							{[
-								{ name: "John Doe", role: "Master Plumber", responsibility: "Oversees all major commercial projects", image: "/placeholder.svg" },
-								{ name: "Jane Smith", role: "Service Manager", responsibility: "Coordinates residential and commercial service calls", image: "/placeholder.svg" },
-								{ name: "Mike Johnson", role: "Apprentice Plumber", responsibility: "Learning the trade and assisting on various projects", image: "/placeholder.svg" },
-							].map((employee, index) => (
-								<motion.div key={index} className="text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.2 }}>
-									<Image src={employee.image} alt={employee.name} width={200} height={200} className="mx-auto mb-4 rounded-full" />
-									<h4 className="mb-2 text-2xl font-bold text-red-700">{employee.name}</h4>
-									<p className="mb-2 text-xl text-gray-700">{employee.role}</p>
-									<p className="text-sm text-gray-600">{employee.responsibility}</p>
-								</motion.div>
-							))}
-						</div>
-					</div>
-					<motion.div
-						className="absolute inset-0 flex items-center justify-center opacity-5"
-						style={{
-							fontSize: "800px",
-							transform: `translateX(${(scrollY - 2000) * 0.1}px)`,
-						}}
-					>
-						<Users className="text-red-200" />
-					</motion.div>
-				</section>
-			</main>
-		</div>
-	);
+import { Wrench, ShieldCheck, Clock } from 'lucide-react'
+import Image from 'next/image'
+export default function About() {
+  return (
+    <section className="pt-12 pb-32">
+      <div className="container flex flex-col mx-auto max-w-7xl gap-28">
+        <div className="flex flex-col gap-7">
+          <h1 className="text-4xl font-semibold lg:text-7xl">
+            Reliable Plumbing Solutions for Lanier and Beyond
+          </h1>
+          <p className="max-w-xl text-lg">
+            Lanier Plumbing provides expert plumbing services for residential and commercial properties. With our skilled team and state-of-the-art equipment, we ensure your plumbing needs are met efficiently and effectively.
+          </p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          <Image
+            src="/placeholder.svg"
+            alt="Lanier Plumbing team at work"
+            className="object-cover w-full h-96 rounded-2xl"
+			width={576}
+			height={144}
+          />
+          <div className="flex flex-col justify-between gap-10 p-10 rounded-2xl bg-muted">
+            <p className="text-sm text-muted-foreground">OUR MISSION</p>
+            <p className="text-lg font-medium">
+              At Lanier Plumbing, we&apos;re committed to providing top-notch plumbing services with integrity and professionalism. Our goal is to ensure every customer experiences the peace of mind that comes with reliable, high-quality plumbing solutions.
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-6 md:gap-20">
+          <div className="max-w-xl">
+            <h2 className="mb-2.5 text-3xl font-semibold md:text-5xl">
+              Why Choose Lanier Plumbing?
+            </h2>
+            <p className="text-muted-foreground">
+              We pride ourselves on our expertise, reliability, and customer-first approach. Here&apos;s what sets us apart in the plumbing industry.
+            </p>
+          </div>
+          <div className="grid gap-10 md:grid-cols-3">
+            <div className="flex flex-col">
+              <div className="flex items-center justify-center mb-5 size-12 rounded-2xl bg-accent">
+                <Wrench className="size-5" />
+              </div>
+              <h3 className="mt-2 mb-3 text-lg font-semibold">
+                Expert Craftsmanship
+              </h3>
+              <p className="text-muted-foreground">
+                Our team of licensed plumbers brings years of experience and a commitment to quality workmanship to every job, ensuring lasting solutions for your plumbing needs.
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center justify-center mb-5 size-12 rounded-2xl bg-accent">
+                <Clock className="size-5" />
+              </div>
+              <h3 className="mt-2 mb-3 text-lg font-semibold">
+                24/7 Emergency Service
+              </h3>
+              <p className="text-muted-foreground">
+                Plumbing emergencies don&apos;t wait for business hours. That&apos;s why we offer round-the-clock emergency services to address your urgent plumbing issues promptly.
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center justify-center mb-5 size-12 rounded-2xl bg-accent">
+                <ShieldCheck className="size-5" />
+              </div>
+              <h3 className="mt-2 mb-3 text-lg font-semibold">
+                Guaranteed Satisfaction
+              </h3>
+              <p className="text-muted-foreground">
+                We stand behind our work with a satisfaction guarantee. If you&apos;re not completely satisfied with our service, we&apos;ll make it right - that&apos;s our promise to you.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="grid gap-10 md:grid-cols-2">
+          <div>
+            <p className="mb-10 text-sm font-medium text-muted-foreground">
+              OUR SERVICES
+            </p>
+            <h2 className="mb-2.5 text-3xl font-semibold md:text-5xl">
+              Comprehensive Plumbing Solutions
+            </h2>
+          </div>
+          <div>
+            <Image	
+              src="/placeholder.svg"
+              alt="Lanier Plumbing service showcase"
+              className="object-cover w-full mb-6 h-36 rounded-xl"
+			  width={576}
+			  height={144}
+            />
+            <p className="text-muted-foreground">
+              From routine maintenance to complex installations, Lanier Plumbing offers a full range of services to meet all your plumbing needs. Our expertise covers residential and commercial properties, ensuring top-quality solutions for every client.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }

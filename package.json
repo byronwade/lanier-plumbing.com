@@ -48,6 +48,7 @@
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"cmdk": "1.0.0",
+		"critters": "^0.0.20",
 		"date-fns": "^4.1.0",
 		"embla-carousel-react": "^8.3.1",
 		"framer-motion": "^11.11.9",
@@ -61,6 +62,7 @@
 		"react-day-picker": "8.10.1",
 		"react-dom": "^19.0.0-rc-603e6108-20241029",
 		"react-hook-form": "^7.53.1",
+		"react-icons": "^5.3.0",
 		"react-resizable-panels": "^2.1.6",
 		"recharts": "^2.13.2",
 		"sonner": "^1.5.0",
@@ -68,8 +70,7 @@
 		"tailwindcss-animate": "^1.0.7",
 		"three": "^0.170.0",
 		"vaul": "^1.1.1",
-		"zod": "^3.23.8",
-		"critters": "^0.0.20"
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@types/estree-jsx": "^1.0.5",
