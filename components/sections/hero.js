@@ -18,10 +18,12 @@ export default function Hero() {
 							<p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">From leaky faucets to complete bathroom renovations, our team of skilled plumbers is ready to tackle any job, big or small.</p>
 							<div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
 								<div className="rounded-md shadow">
-									<Button className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-900 md:py-4 md:text-lg md:px-10">Get a Free Quote</Button>
+									<Button size="lg" className="bg-red-600 hover:bg-red-800">
+										Get a Free Quote
+									</Button>
 								</div>
 								<div className="mt-3 sm:mt-0 sm:ml-3">
-									<Button variant="outline" className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-black border border-transparent rounded-md hover:bg-gray-800 md:py-4 md:text-lg md:px-10">
+									<Button size="lg" variant="outline">
 										Our Services
 									</Button>
 								</div>

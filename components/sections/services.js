@@ -40,13 +40,16 @@ function ResidentialSection() {
 							</li>
 						</ul>
 						<div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
-							<Button className="w-full sm:w-auto px-8 py-4 text-lg font-semibold text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 min-h-[48px]" aria-label="Call us for residential plumbing services">
-								<Phone className="w-5 h-5 mr-2" aria-hidden="true" />
-								<span className="min-w-[7rem]">(555) 123-4567</span>
-							</Button>
-
-							<Link href="/services#residential" className="w-full sm:w-auto inline-block min-h-[48px]">
-								<span className="w-full px-8 py-4 text-lg font-semibold text-red-700 transition-colors bg-white border-2 border-red-700 rounded-md hover:bg-red-700 hover:text-white focus:ring-4 focus:ring-red-300 inline-block min-w-[200px]">View Residential Services</span>
+							<Link href="tel:5551234567">
+								<Button size="lg" className="bg-red-600 hover:bg-red-800">
+									<Phone className="w-4 h-4 mr-2" aria-hidden="true" />
+									<span className="min-w-[7rem]">(555) 123-4567</span>
+								</Button>
+							</Link>
+							<Link href="/services#residential">
+								<Button size="lg" variant="outline">
+									View Residential Services
+								</Button>
 							</Link>
 						</div>
 					</div>
@@ -92,15 +95,17 @@ function NewConstructionSection() {
 							</li>
 						</ul>
 						<div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-							<Button className="px-6 py-3 text-lg font-semibold text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300" aria-label="Call us for new construction plumbing services">
-								<Phone className="w-5 h-5 mr-2" aria-hidden="true" />
-								(555) 123-4567
-							</Button>
-							<Button variant="outline" className="px-6 py-3 text-lg font-semibold text-red-700 transition-colors bg-white border-2 border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:ring-red-300">
-								<Link href="/services#new-construction" className="flex items-center justify-center w-full h-full">
+							<Link href="tel:5551234567">
+								<Button size="lg" className="bg-red-600 hover:bg-red-800">
+									<Phone className="w-4 h-4 mr-2" aria-hidden="true" />
+									(555) 123-4567
+								</Button>
+							</Link>
+							<Link href="/services#new-construction">
+								<Button size="lg" variant="outline">
 									View New Construction Services
-								</Link>
-							</Button>
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -135,15 +140,17 @@ function CommercialSection() {
 							</li>
 						</ul>
 						<div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-							<Button className="px-6 py-3 text-lg font-semibold text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300" aria-label="Call us for commercial plumbing services">
-								<Phone className="w-5 h-5 mr-2" aria-hidden="true" />
-								(555) 123-4567
-							</Button>
-							<Button variant="outline" className="px-6 py-3 text-lg font-semibold text-red-700 transition-colors bg-white border-2 border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:ring-red-300">
-								<Link href="/services#commercial" className="flex items-center justify-center w-full h-full">
+							<Link href="tel:5551234567">
+								<Button size="lg" className="bg-red-600 hover:bg-red-800">
+									<Phone className="w-4 h-4 mr-2" aria-hidden="true" />
+									(555) 123-4567
+								</Button>
+							</Link>
+							<Link href="/services#commercial">
+								<Button size="lg" variant="outline">
 									View Commercial Services
-								</Link>
-							</Button>
+								</Button>
+							</Link>
 						</div>
 					</div>
 					<div className="order-1 lg:order-2">
