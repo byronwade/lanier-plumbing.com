@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const Hero = dynamic(() => import("@/components/sections/hero"));
 const Testimonials = dynamic(() => import("@/components/sections/testimonials"));
@@ -9,9 +10,15 @@ export default function VIPUnderConstruction() {
 	return (
 		<>
 			<Hero />
-			<FactsBanner />
-			<Services />
-			<Testimonials />
+			<Suspense fallback={<div>Loading facts...</div>}>
+				<FactsBanner />
+			</Suspense>
+			<Suspense fallback={<div>Loading services...</div>}>
+				<Services />
+			</Suspense>
+			<Suspense fallback={<div>Loading testimonials...</div>}>
+				<Testimonials />
+			</Suspense>
 		</>
 	);
 }
