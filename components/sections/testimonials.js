@@ -19,7 +19,7 @@ export default function Testimonials() {
 					</div>
 					<div className="flex flex-col gap-8 sm:flex-row lg:gap-16">
 						<div className="inline-block">
-							<Image src="https://placehold.co/24x24" alt="Google Reviews" className="mb-4" width={24} height={24} />
+							<Image src="/google-icon.svg" alt="Google Reviews" className="mb-4" width={24} height={24} />
 							<div className="flex items-center">
 								<div className="mr-4 text-sm font-semibold text-primary">4.8 / 5</div>
 								<div className="flex items-center gap-0.5">
@@ -30,7 +30,7 @@ export default function Testimonials() {
 							</div>
 						</div>
 						<div className="inline-block">
-							<Image src="https://placehold.co/24x24" alt="Yelp Reviews" className="mb-4" width={24} height={24} />
+							<Image src="/yelp.svg" alt="Yelp Reviews" className="mb-4" width={24} height={24} />
 							<div className="flex items-center">
 								<div className="mr-4 text-sm font-semibold text-primary">4.8 / 5</div>
 								<div className="flex items-center gap-0.5">
@@ -70,36 +70,36 @@ const testimonials = [
 		text: "Best plumber in the area! Fixed our leaking pipe quickly and professionally. The team was courteous and cleaned up everything after the job.",
 		name: "Sarah Johnson",
 		location: "Local Homeowner",
-		avatar: "https://placehold.co/40x40",
+		avatar: "/placeholder.svg",
 	},
 	{
 		text: "Emergency service that actually shows up! Had a burst pipe at 2 AM and they were here within 30 minutes.",
 		name: "Michael Chen",
 		location: "Residential Customer",
-		avatar: "https://placehold.co/40x40",
+		avatar: "/placeholder.svg",
 	},
 	{
 		text: "Fair pricing and excellent workmanship. They replaced our water heater and explained everything clearly throughout the process.",
 		name: "David Williams",
 		location: "Property Manager",
-		avatar: "https://placehold.co/40x40",
+		avatar: "/placeholder.svg",
 	},
 	{
 		text: "Very professional team. They installed new fixtures in our bathroom and kitchen. Everything works perfectly!",
 		name: "Emily Rodriguez",
 		location: "Home Owner",
-		avatar: "https://placehold.co/40x40",
+		avatar: "/placeholder.svg",
 	},
 	{
 		text: "Fantastic service! They helped us with a complete plumbing inspection before buying our new home. Saved us from a costly mistake!",
 		name: "James Thompson",
 		location: "New Homeowner",
-		avatar: "https://placehold.co/40x40",
+		avatar: "/placeholder.svg",
 	},
 	{
 		text: "Regular maintenance service for our office building. Always reliable, always on time. Highly recommended for commercial properties.",
 		name: "Lisa Anderson",
 		location: "Business Owner",
-		avatar: "https://placehold.co/40x40",
+		avatar: "/placeholder.svg",
 	},
 ];

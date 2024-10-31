@@ -29,7 +29,7 @@ export function FooterCTA() {
 				ref={parallaxRef}
 				className="absolute inset-0 z-0"
 				style={{
-					backgroundImage: "url('https://placehold.co/300x300')",
+					backgroundImage: "url('/placeholder.svg')",
 					backgroundSize: "200px",
 					backgroundRepeat: "repeat",
 					opacity: 0.1,

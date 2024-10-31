@@ -34,7 +34,7 @@ export default function ContactPage() {
 						</section>
 						<section>
 							<h2 className="mb-6 text-2xl font-semibold text-primary">Our Location</h2>
-							<Image src="https://placehold.co/600x400" alt="Map location" width={600} height={400} className="object-cover" />
+							<Image src="/placeholder.svg" alt="Map location" width={600} height={400} className="object-cover" />
 						</section>
 					</div>
 

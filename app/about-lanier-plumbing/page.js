@@ -27,7 +27,7 @@ export default function ArtisticAboutUs() {
 						}}
 						transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
 					>
-						<Image src="https://placehold.co/256x256" alt="Floating shape" width={256} height={256} className="rounded-full" />
+						<Image src="/placeholder.svg" alt="Floating shape" width={256} height={256} className="rounded-full" />
 					</motion.div>
 					<motion.div
 						className="absolute right-0 w-48 h-48 top-3/4 opacity-20"
@@ -38,7 +38,7 @@ export default function ArtisticAboutUs() {
 						}}
 						transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
 					>
-						<Image src="https://placehold.co/192x192" alt="Floating shape" width={192} height={192} className="rounded-full" />
+						<Image src="/placeholder.svg" alt="Floating shape" width={192} height={192} className="rounded-full" />
 					</motion.div>
 				</div>
 
@@ -135,9 +135,9 @@ export default function ArtisticAboutUs() {
 						<h3 className="mb-16 text-5xl font-bold text-center text-red-800">Our Team</h3>
 						<div className="grid grid-cols-1 gap-12 md:grid-cols-3">
 							{[
-								{ name: "John Doe", role: "Master Plumber", responsibility: "Oversees all major commercial projects", image: "https://placehold.co/300x300" },
-								{ name: "Jane Smith", role: "Service Manager", responsibility: "Coordinates residential and commercial service calls", image: "https://placehold.co/300x300" },
-								{ name: "Mike Johnson", role: "Apprentice Plumber", responsibility: "Learning the trade and assisting on various projects", image: "https://placehold.co/300x300" },
+								{ name: "John Doe", role: "Master Plumber", responsibility: "Oversees all major commercial projects", image: "/placeholder.svg" },
+								{ name: "Jane Smith", role: "Service Manager", responsibility: "Coordinates residential and commercial service calls", image: "/placeholder.svg" },
+								{ name: "Mike Johnson", role: "Apprentice Plumber", responsibility: "Learning the trade and assisting on various projects", image: "/placeholder.svg" },
 							].map((employee, index) => (
 								<motion.div key={index} className="text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.2 }}>
 									<Image src={employee.image} alt={employee.name} width={200} height={200} className="mx-auto mb-4 rounded-full" />
