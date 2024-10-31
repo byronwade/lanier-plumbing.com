@@ -10,12 +10,6 @@ const inter = Inter({
 	preload: true,
 });
 
-export const viewport = {
-	width: "device-width",
-	initialScale: 1,
-	maximumScale: 1,
-};
-
 export const metadata = {
 	title: "Lanier Plumbing | Expert Plumbing Services",
 	description: "Professional plumbing services for residential and commercial properties. Available 24/7 for emergencies.",
