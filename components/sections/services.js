@@ -21,7 +21,7 @@ export default function Services() {
 
 function ResidentialSection() {
 	return (
-		<section className="flex items-center min-h-screen bg-gradient-to-br from-red-50 to-pink-50">
+		<section className="flex items-center bg-gradient-to-br from-red-50 to-pink-50">
 			<div className="container px-4 py-12 mx-auto max-w-7xl md:py-24">
 				<div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
 					<div className="order-2 lg:order-1">
@@ -71,7 +71,7 @@ function ResidentialSection() {
 
 function NewConstructionSection() {
 	return (
-		<section className="flex items-center min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
+		<section className="flex items-center bg-gradient-to-br from-red-50 to-orange-50">
 			<div className="container px-4 py-12 mx-auto max-w-7xl md:py-24">
 				<div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
 					<div className="order-2 lg:order-1">
@@ -121,7 +121,7 @@ function NewConstructionSection() {
 
 function CommercialSection() {
 	return (
-		<section className="flex items-center min-h-screen bg-gradient-to-br from-red-50 to-yellow-50">
+		<section className="flex items-center bg-gradient-to-br from-red-50 to-yellow-50">
 			<div className="container px-4 py-12 mx-auto max-w-7xl md:py-24">
 				<div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
 					<div className="order-2 lg:order-1">

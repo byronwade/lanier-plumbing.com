@@ -28,13 +28,13 @@ export default function PlumbingCostSaving() {
 	);
 
 	return (
-		<section className="pt-20 pb-32 text-white bg-gray-900">
-			<div className="container px-4 mx-auto">
+		<section className="relative py-16 overflow-hidden text-gray-100 bg-gray-900 md:pt-20 md:pb-32">
+			<div className="container relative z-10 px-4 mx-auto">
 				<div className="flex items-center justify-center mb-4">
 					<Wrench className="mr-2 text-red-500" size={24} />
 					<span className="font-semibold tracking-wider text-red-500 uppercase">Our Work</span>
 				</div>
-				<h2 className="mb-12 text-4xl font-bold text-center md:text-5xl">
+				<h2 className="mb-4 text-3xl font-bold text-center text-white md:text-4xl lg:text-5xl">
 					We Offer Cost Efficient
 					<br />
 					Plumbing Services

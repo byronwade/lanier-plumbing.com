@@ -6,6 +6,8 @@ const Hero = dynamic(() => import("@/components/sections/hero"));
 const FactsBanner = dynamic(() => import("@/components/sections/facts"));
 const PlumbingCostSaving = dynamic(() => import("@/components/sections/cost-saving"));
 const Services = dynamic(() => import("@/components/sections/services"));
+//const Reviews = dynamic(() => import("@/components/sections/reviews"));
+const FAQ = dynamic(() => import("@/components/sections/faq"));
 
 // Client component with proper boundary
 const Testimonials = dynamic(() => import("@/components/sections/testimonials"), {
@@ -29,6 +31,10 @@ export default function HomePage() {
 
 			<Suspense fallback={<div className="h-96 bg-gray-50" />}>
 				<Services />
+			</Suspense>
+
+			<Suspense fallback={<div className="h-96 bg-gray-50" />}>
+				<FAQ />
 			</Suspense>
 
 			<div className="bg-gray-100">
