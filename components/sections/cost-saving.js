@@ -1,14 +1,31 @@
+import { useMemo } from "react";
 import Image from "next/image";
 import { Wrench } from "lucide-react";
 
 export default function PlumbingCostSaving() {
-	const services = [
-		{ src: "/placeholder.svg", alt: "Pipe repair" },
-		{ src: "/placeholder.svg", alt: "Drain cleaning" },
-		{ src: "/placeholder.svg", alt: "Water heater installation" },
-		{ src: "/placeholder.svg", alt: "Fixture installation" },
-		{ src: "/placeholder.svg", alt: "Leak detection" },
-	];
+	const services = useMemo(
+		() => [
+			{ src: "/placeholder.svg", alt: "Pipe repair" },
+			{ src: "/placeholder.svg", alt: "Drain cleaning" },
+			{ src: "/placeholder.svg", alt: "Water heater installation" },
+			{ src: "/placeholder.svg", alt: "Fixture installation" },
+			{ src: "/placeholder.svg", alt: "Leak detection" },
+		],
+		[]
+	);
+
+	const serviceGrid = useMemo(
+		() => (
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5">
+				{services.map((service, index) => (
+					<div key={index} className="relative h-64 overflow-hidden rounded-lg">
+						<Image src={service.src} alt={service.alt} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw" className="transition-transform duration-300 hover:scale-110" loading="lazy" />
+					</div>
+				))}
+			</div>
+		),
+		[services]
+	);
 
 	return (
 		<section className="pt-20 pb-32 text-white bg-gray-900">
@@ -22,13 +39,7 @@ export default function PlumbingCostSaving() {
 					<br />
 					Plumbing Services
 				</h2>
-				<div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5">
-					{services.map((service, index) => (
-						<div key={index} className="relative h-64 overflow-hidden rounded-lg">
-							<Image src={service.src} alt={service.alt} layout="fill" objectFit="cover" className="transition-transform duration-300 hover:scale-110" />
-						</div>
-					))}
-				</div>
+				{serviceGrid}
 			</div>
 		</section>
 	);

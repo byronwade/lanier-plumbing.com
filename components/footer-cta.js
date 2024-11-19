@@ -53,7 +53,7 @@ export function FooterCTA() {
 				<div className="flex flex-col items-center">
 					<Button className="px-8 py-6 text-lg text-white transition-transform bg-red-600 rounded-md shadow-lg hover:bg-red-700 hover:scale-105">
 						<Phone className="w-6 h-6 mr-2" />
-						Call (555) 123-4567
+						Call 404-988-4910
 					</Button>
 					<Link href="/contact-lanier-plumbing" className="mt-2 text-sm text-red-600 underline hover:text-red-800">
 						Contact Us

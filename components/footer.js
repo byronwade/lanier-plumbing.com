@@ -41,17 +41,17 @@ export default function MinimalisticPlumberFooter() {
 						</div>
 						<div>
 							<h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
-							<p className="mb-2 text-sm">1234 Plumber Lane, Humbletown, HT 12345</p>
+							<p className="mb-2 text-sm">1100 McFarland 400, Suite B, Alpharetta, GA 30004</p>
 							<p className="mb-2 text-sm">
 								Phone:{" "}
-								<a href="tel:+18005551234" className="transition-colors hover:text-red-600">
-									1-800-555-1234
+								<a href="tel:404-988-4910" className="transition-colors hover:text-red-600">
+									404-988-4910
 								</a>
 							</p>
 							<p className="mb-4 text-sm">
 								Email:{" "}
-								<a href="mailto:info@humbleplumber.com" className="transition-colors hover:text-red-600">
-									info@humbleplumber.com
+								<a href="mailto:byron@lanier-plumbing.com" className="transition-colors hover:text-red-600">
+									byron@lanier-plumbing.com
 								</a>
 							</p>
 							<div className="flex space-x-4">

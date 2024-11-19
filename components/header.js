@@ -44,7 +44,7 @@ export default function CompactBalancedPlumberHeader() {
 						<a href="tel:+18005551234" className="bg-red-600 text-white hover:bg-red-700 text-sm px-3 py-1.5 rounded transition-colors flex items-center">
 							<Phone className="w-4 h-4 mr-2" />
 							<span className="font-semibold md:hidden">Call</span>
-							<span className="hidden font-semibold md:inline">1-800-555-1234</span>
+							<span className="hidden font-semibold md:inline">404-988-4910</span>
 						</a>
 						<Button variant="ghost" size="sm" className="text-gray-700 md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
 							<Menu className="w-5 h-5" />
@@ -82,7 +82,7 @@ export default function CompactBalancedPlumberHeader() {
 						<div className="flex items-center space-x-4">
 							<div className="flex items-center">
 								<Clock className="w-4 h-4 mr-2 text-red-600" />
-								<span>Mon - Fri: 8am - 6pm</span>
+								<span>Mon - Fri: 8am - 5pm</span>
 							</div>
 							<div className="flex items-center">
 								<MapPin className="w-4 h-4 mr-2 text-red-600" />

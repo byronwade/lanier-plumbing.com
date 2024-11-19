@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Home, Building2, ArrowRight, HardHat, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Services() {
-	return (
-		<div className="flex flex-col w-full">
-			<ResidentialSection />
-			<NewConstructionSection />
-			<CommercialSection />
-		</div>
+	const sections = useMemo(
+		() => (
+			<div className="flex flex-col w-full">
+				<ResidentialSection />
+				<NewConstructionSection />
+				<CommercialSection />
+			</div>
+		),
+		[]
 	);
+
+	return sections;
 }
 
 function ResidentialSection() {
