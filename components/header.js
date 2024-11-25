@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, Phone, Clock, MapPin, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,8 +17,11 @@ export function NavLink({ href, children }) {
 	);
 }
 
-export default function Header() {
+export default function Header({ settings }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const phoneNumber = settings?.contact?.phoneNumber || "404-988-4910";
+	const address = settings?.contact?.address;
+	const formattedAddress = address ? `${address.city}, ${address.state}` : "Cherokee Counties & Beyond";
 
 	return (
 		<header className="bg-white">
@@ -42,10 +45,10 @@ export default function Header() {
 					</nav>
 
 					<div className="flex items-center space-x-2 md:space-x-0">
-						<a href="tel:+18005551234" className="bg-red-600 text-white hover:bg-red-700 text-sm px-3 py-1.5 rounded transition-colors flex items-center">
+						<a href={`tel:${phoneNumber.replace(/\D/g, "")}`} className="bg-red-600 text-white hover:bg-red-700 text-sm px-3 py-1.5 rounded transition-colors flex items-center">
 							<Phone className="w-4 h-4 mr-2" />
 							<span className="font-semibold md:hidden">Call</span>
-							<span className="hidden font-semibold md:inline">404-988-4910</span>
+							<span className="hidden font-semibold md:inline">{phoneNumber}</span>
 						</a>
 						<Button variant="ghost" size="sm" className="text-gray-700 md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
 							<Menu className="w-5 h-5" />
@@ -77,7 +80,7 @@ export default function Header() {
 							</div>
 							<div className="flex items-center">
 								<MapPin className="w-4 h-4 mr-2 text-red-600" />
-								<span>Serving Cherokee Counties & Beyond</span>
+								<span>Serving {formattedAddress}</span>
 							</div>
 						</div>
 						<div className="flex items-center">

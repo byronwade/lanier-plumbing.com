@@ -1,8 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "../../components/header";
-import Footer from "../../components/footer";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { Suspense } from "react";
+import { getSettings } from "@/actions/getSettings";
 
 // Optimize font loading
 const inter = Inter({
@@ -25,12 +26,14 @@ export const metadata = {
 	},
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+	const settings = await getSettings();
+
 	return (
 		<html lang="en">
 			<body className={inter.className}>
 				<Suspense fallback={<div className="h-16 bg-background" />}>
-					<Header />
+					<Header settings={settings} />
 				</Suspense>
 				<main>{children}</main>
 				<Footer />
