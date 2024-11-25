@@ -1,12 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Menu, Phone, Clock, MapPin, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 
-export default function CompactBalancedPlumberHeader() {
+export function NavLink({ href, children }) {
+	const pathname = usePathname();
+	const isActive = pathname === href;
+
+	return (
+		<Link href={href} prefetch={true} className={`transition-colors ${isActive ? "text-primary" : "hover:text-primary"}`}>
+			{children}
+		</Link>
+	);
+}
+
+export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	return (
@@ -14,7 +25,7 @@ export default function CompactBalancedPlumberHeader() {
 			<div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between h-16 sm:h-18">
 					<div className="flex items-center">
-						<Link href="/" className="flex items-center space-x-2">
+						<Link prefetch={true} href="/" className="flex items-center space-x-2">
 							<div className="relative w-7 h-7 sm:w-8 sm:h-8">
 								<Phone className="w-full h-full text-red-600" />
 							</div>
@@ -23,21 +34,11 @@ export default function CompactBalancedPlumberHeader() {
 					</div>
 
 					<nav className="items-center hidden space-x-4 md:flex lg:space-x-6">
-						<Link href="/" className="text-sm text-gray-700 transition-colors hover:text-red-600">
-							Home
-						</Link>
-						<Link href="/lanier-plumbing-services" className="text-sm text-gray-700 transition-colors hover:text-red-600">
-							Services
-						</Link>
-						<Link href="/expert-plumbing-tips" className="text-sm text-gray-700 transition-colors hover:text-red-600">
-							Expert Tips
-						</Link>
-						<Link href="/about-lanier-plumbing" className="text-sm text-gray-700 transition-colors hover:text-red-600">
-							About Us
-						</Link>
-						<Link href="/contact-lanier-plumbing" className="text-sm text-gray-700 transition-colors hover:text-red-600">
-							Contact Us
-						</Link>
+						<NavLink href="/">Home</NavLink>
+						<NavLink href="/lanier-plumbing-services">Services</NavLink>
+						<NavLink href="/expert-plumbing-tips">Expert Tips</NavLink>
+						<NavLink href="/about-lanier-plumbing">About Us</NavLink>
+						<NavLink href="/contact-lanier-plumbing">Contact Us</NavLink>
 					</nav>
 
 					<div className="flex items-center space-x-2 md:space-x-0">
@@ -57,21 +58,11 @@ export default function CompactBalancedPlumberHeader() {
 			{isMenuOpen && (
 				<div className="bg-white border-t border-gray-200 md:hidden">
 					<div className="px-2 pt-2 pb-3 space-y-1">
-						<Link href="/" className="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50 hover:text-red-600">
-							Home
-						</Link>
-						<Link href="/services" className="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50 hover:text-red-600">
-							Services
-						</Link>
-						<Link href="/expert-tips" className="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50 hover:text-red-600">
-							Expert Tips
-						</Link>
-						<Link href="/about" className="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50 hover:text-red-600">
-							About Us
-						</Link>
-						<Link href="/contact" className="block px-3 py-2 text-base font-medium text-gray-700 rounded-md hover:bg-gray-50 hover:text-red-600">
-							Contact Us
-						</Link>
+						<NavLink href="/">Home</NavLink>
+						<NavLink href="/services">Services</NavLink>
+						<NavLink href="/expert-tips">Expert Tips</NavLink>
+						<NavLink href="/about">About Us</NavLink>
+						<NavLink href="/contact">Contact Us</NavLink>
 					</div>
 				</div>
 			)}

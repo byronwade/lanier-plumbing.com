@@ -45,13 +45,13 @@ function ResidentialSection() {
 							</li>
 						</ul>
 						<div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
-							<Link href="tel:5551234567">
+							<Link prefetch={true} href="tel:5551234567">
 								<Button size="lg" className="bg-red-600 hover:bg-red-800">
 									<Phone className="w-4 h-4 mr-2" aria-hidden="true" />
 									<span className="min-w-[7rem]">(555) 123-4567</span>
 								</Button>
 							</Link>
-							<Link href="/services#residential">
+							<Link prefetch={true} href="/services#residential">
 								<Button size="lg" variant="outline">
 									View Residential Services
 								</Button>
@@ -100,13 +100,13 @@ function NewConstructionSection() {
 							</li>
 						</ul>
 						<div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-							<Link href="tel:5551234567">
+							<Link prefetch={true} href="tel:5551234567">
 								<Button size="lg" className="bg-red-600 hover:bg-red-800">
 									<Phone className="w-4 h-4 mr-2" aria-hidden="true" />
 									(555) 123-4567
 								</Button>
 							</Link>
-							<Link href="/services#new-construction">
+							<Link prefetch={true} href="/services#new-construction">
 								<Button size="lg" variant="outline">
 									View New Construction Services
 								</Button>
@@ -145,13 +145,13 @@ function CommercialSection() {
 							</li>
 						</ul>
 						<div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-							<Link href="tel:5551234567">
+							<Link prefetch={true} href="tel:5551234567">
 								<Button size="lg" className="bg-red-600 hover:bg-red-800">
 									<Phone className="w-4 h-4 mr-2" aria-hidden="true" />
 									(555) 123-4567
 								</Button>
 							</Link>
-							<Link href="/services#commercial">
+							<Link prefetch={true} href="/services#commercial">
 								<Button size="lg" variant="outline">
 									View Commercial Services
 								</Button>

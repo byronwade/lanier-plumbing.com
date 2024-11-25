@@ -55,7 +55,7 @@ export function FooterCTA() {
 						<Phone className="w-6 h-6 mr-2" />
 						Call 404-988-4910
 					</Button>
-					<Link href="/contact-lanier-plumbing" className="mt-2 text-sm text-red-600 underline hover:text-red-800">
+					<Link prefetch={true} href="/contact-lanier-plumbing" className="mt-2 text-sm text-red-600 underline hover:text-red-800">
 						Contact Us
 					</Link>
 				</div>

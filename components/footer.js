@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import { FooterCTA } from "@/components/footer-cta";
 
-export default function MinimalisticPlumberFooter() {
+export default function Footer() {
 	return (
 		<>
 			<FooterCTA />
@@ -18,22 +18,22 @@ export default function MinimalisticPlumberFooter() {
 							<h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
 							<ul className="space-y-2">
 								<li>
-									<Link href="/" className="text-sm transition-colors hover:text-red-600">
+									<Link prefetch={true} href="/" className="text-sm transition-colors hover:text-red-600">
 										Home
 									</Link>
 								</li>
 								<li>
-									<Link href="/lanier-plumbing-services" className="text-sm transition-colors hover:text-red-600">
+									<Link prefetch={true} href="/lanier-plumbing-services" className="text-sm transition-colors hover:text-red-600">
 										Services
 									</Link>
 								</li>
 								<li>
-									<Link href="/expert-plumbing-tips" className="text-sm transition-colors hover:text-red-600">
+									<Link prefetch={true} href="/expert-plumbing-tips" className="text-sm transition-colors hover:text-red-600">
 										Expert Tips
 									</Link>
 								</li>
 								<li>
-									<Link href="/about-lanier-plumbing" className="text-sm transition-colors hover:text-red-600">
+									<Link prefetch={true} href="/about-lanier-plumbing" className="text-sm transition-colors hover:text-red-600">
 										About Us
 									</Link>
 								</li>
