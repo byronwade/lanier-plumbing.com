@@ -3,7 +3,8 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Suspense } from "react";
-import { getSettings } from "@/actions/getSettings";
+import Providers from "@/app/(app)/providers";
+import { getSettings } from "@/lib/actions/getSettings";
 
 // Optimize font loading
 const inter = Inter({
@@ -27,17 +28,19 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-	const settings = await getSettings();
+	const initialSettings = await getSettings();
+	console.log(initialSettings);
 
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<Suspense fallback={<div className="h-16 bg-background" />}>
-					<Header settings={settings} />
-				</Suspense>
-				<main>{children}</main>
-				<Footer />
-				{/* <GoogleAnalytics gaId="G-D4C3GCFE7P" /> */}
+				<Providers>
+					<Suspense fallback={<div className="h-16 bg-background" />}>
+						<Header initialSettings={initialSettings} />
+					</Suspense>
+					<main>{children}</main>
+					<Footer />
+				</Providers>
 			</body>
 		</html>
 	);

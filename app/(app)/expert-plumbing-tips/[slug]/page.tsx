@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPostBySlug } from "@/actions/getPosts";
+import { getPostBySlug } from "@/lib/actions/getPosts";
 import { Metadata } from "next";
 
 type Props = {
