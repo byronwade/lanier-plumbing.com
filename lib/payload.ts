@@ -1,5 +1,8 @@
 import { cache } from "react";
 import payload from "payload";
+import { postgresAdapter } from "@payloadcms/db-postgres";
+import { webpackBundler } from "@payloadcms/bundler-webpack";
+import { slateEditor } from "@payloadcms/richtext-slate";
 import type { Payload } from "payload";
 
 // Cache the initialized payload instance
@@ -20,13 +23,28 @@ export const getPayloadClient = cache(async (): Promise<Payload> => {
 
 	if (!cached.promise) {
 		cached.promise = payload.init({
-			secret: process.env.PAYLOAD_SECRET,
-			local: true,
-			db: {
-				type: process.env.DATABASE_TYPE || "postgres",
-				url: process.env.DATABASE_URI || process.env.MONGODB_URI,
+			config: {
+				serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "",
+				collections: [], // Collections will be loaded from config file
+				globals: [], // Globals will be loaded from config file
+				db: postgresAdapter({
+					pool: {
+						connectionString: process.env.DATABASE_URI || "",
+					},
+				}),
+				admin: {
+					bundler: webpackBundler(),
+				},
+				editor: slateEditor({}),
+				typescript: {
+					outputFile: false,
+				},
+				graphQL: {
+					schemaOutputFile: false,
+				},
+				secret: process.env.PAYLOAD_SECRET,
 			},
-			// Let Payload load collections and globals from the filesystem
+			// This configPath is required - it will load your collections and globals
 			configPath: process.cwd() + "/payload.config.ts",
 		});
 	}
@@ -42,7 +60,7 @@ export const getPayloadClient = cache(async (): Promise<Payload> => {
 });
 
 // Export this for use in React Server Components
-export const payload = cache(async () => {
+export const payloadClient = cache(async () => {
 	const client = await getPayloadClient();
 	return client;
 });
