@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { Menu, Phone, Clock, MapPin, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,10 +17,10 @@ export function NavLink({ href, children }) {
 	);
 }
 
-export default function Header({ settings }) {
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const phoneNumber = settings?.contact?.phoneNumber || "404-988-4910";
-	const address = settings?.contact?.address;
+export default function Header({ initialSettings }) {
+	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+	const phoneNumber = initialSettings?.contact?.phoneNumber || "404-988-4910";
+	const address = initialSettings?.contact?.address;
 	const formattedAddress = address ? `${address.city}, ${address.state}` : "Cherokee Counties & Beyond";
 
 	return (

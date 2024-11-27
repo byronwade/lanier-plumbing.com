@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import PageHeader from "@/components/page-header";
 import Link from "next/link";
-import { getServices } from "@/actions/getServices";
+import { getServices } from "@/lib/actions/getServices";
 
 async function ServicesList() {
 	const services = await getServices();

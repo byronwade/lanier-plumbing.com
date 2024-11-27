@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getPosts } from "@/actions/getPosts";
+import { getPosts } from "@/lib/actions/getPosts";
 import PageHeader from "@/components/page-header";
 import Link from "next/link";
 

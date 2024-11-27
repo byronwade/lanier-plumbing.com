@@ -19,31 +19,15 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@/components/*": [
-        "./components/*"
-      ],
-      "@/lib/*": [
-        "./lib/*"
-      ],
-      "@/hooks/*": [
-        "./hooks/*"
-      ],
-      "@/actions/*": [
-        "./actions/*"
-      ],
-      "@/content/*": [
-        "./content/*"
-      ],
-      "@/app/*": [
-        "./app/*"
-      ],
-      "@payload-config": [
-        "payload.config.ts"
-      ]
-    },
+		"@/*": ["./*"],
+		"@/components/*": ["./components/*"],
+		"@/lib/*": ["./lib/*"],
+		"@/hooks/*": ["lib/hooks/*"],
+		"@/actions/*": ["lib/actions/*"],
+		"@/content/*": ["./content/*"],
+		"@/app/*": ["./app/*"],
+		"@payload-config": ["payload.config.ts"]
+	},
     "plugins": [
       {
         "name": "next"

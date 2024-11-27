@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getServiceBySlug } from "@/actions/getServices";
+import { getServiceBySlug } from "@/lib/actions/getServices";
 import { Metadata } from "next";
 
 type Props = {

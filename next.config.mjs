@@ -17,8 +17,23 @@ const nextConfig = {
 	},
 	experimental: {
 		reactCompiler: false,
-		inlineCSS: true,
+		inlineCss: true,
 		ppr: true,
+	},
+	webpack: (config, { isServer }) => {
+		if (!isServer) {
+			config.resolve.fallback = {
+				fs: false,
+				net: false,
+				https: false,
+				child_process: false,
+				module: false,
+				dns: false,
+				readline: false,
+				worker_threads: false,
+			};
+		}
+		return config;
 	},
 };
 

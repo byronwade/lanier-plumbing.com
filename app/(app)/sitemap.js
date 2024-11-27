@@ -1,6 +1,6 @@
-import { getServices } from "@/actions/getServices";
-import { getPosts } from "@/actions/getPosts";
-import { getTips } from "@/actions/getTips";
+import { getServices } from "@/lib/actions/getServices";
+import { getPosts } from "@/lib/actions/getPosts";
+import { getTips } from "@/lib/actions/getTips";
 
 export default async function sitemap() {
 	const baseUrl = "https://lanier-plumbing.com";
