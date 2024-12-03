@@ -19,6 +19,7 @@ const nextConfig = {
 		reactCompiler: false,
 		inlineCss: true,
 		ppr: true,
+		dynamicIO: true,
 	},
 	webpack: (config, { isServer }) => {
 		if (!isServer) {

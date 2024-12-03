@@ -1,6 +1,4 @@
-"use server";
-
-import { createCache } from "@/lib/unstable-cache";
+"use cache";
 
 const FAKE_TIPS = [
 	{
@@ -17,34 +15,26 @@ const FAKE_TIPS = [
 	},
 ];
 
-export const getTips = createCache(
-	async () => {
-		return FAKE_TIPS.map(({ slug, title, description }) => ({
-			slug,
-			title,
-			description,
-		}));
-	},
-	["tips-list"],
-	{ revalidate: 3600, tags: ["tips"] }
-);
+export async function getTips() {
+	return FAKE_TIPS.map(({ slug, title, description }) => ({
+		slug,
+		title,
+		description,
+	}));
+}
 
-export const getTipBySlug = createCache(
-	async (slug: string) => {
-		const tip = FAKE_TIPS.find((t) => t.slug === slug);
+export async function getTipBySlug(slug: string) {
+	const tip = FAKE_TIPS.find((t) => t.slug === slug);
 
-		if (!tip) {
-			throw new Error(`Tip ${slug} not found`);
-		}
+	if (!tip) {
+		throw new Error(`Tip ${slug} not found`);
+	}
 
-		return {
-			data: {
-				title: tip.title,
-				description: tip.description,
-			},
-			content: tip.content,
-		};
-	},
-	["tip"],
-	{ revalidate: 3600, tags: ["tips"] }
-);
+	return {
+		data: {
+			title: tip.title,
+			description: tip.description,
+		},
+		content: tip.content,
+	};
+}

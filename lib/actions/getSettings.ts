@@ -1,7 +1,8 @@
-import { cache } from "react";
+"use cache";
+
 import { getPayloadClient } from "@/lib/payload";
 
-export const getSettings = cache(async () => {
+export async function getSettings() {
 	try {
 		const client = await getPayloadClient();
 		const settings = await client.findGlobal({
@@ -13,4 +14,4 @@ export const getSettings = cache(async () => {
 		console.error("Error fetching settings:", error);
 		return null;
 	}
-});
+}
