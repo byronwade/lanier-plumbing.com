@@ -1,28 +1,52 @@
 "use cache";
 
-import { getPayloadClient } from "@/lib/payload";
+import { fetchGraphQL } from "@/lib/graphql";
 import type { Service } from "@/payload-types";
 
 export async function getServices() {
-	const payload = await getPayloadClient();
-	const services = await payload.find({
-		collection: "services" as const,
-	});
-	return services.docs as Service[];
+	const query = `
+		query GetServices {
+			Services {
+				docs {
+					id
+					title
+					slug
+					description
+					content
+					createdAt
+					updatedAt
+				}
+			}
+		}
+	`;
+
+	const data = await fetchGraphQL(query);
+	return data.Services.docs as Service[];
 }
 
 export async function getServiceBySlug(slug: string) {
-	const payload = await getPayloadClient();
-	const service = await payload.find({
-		collection: "services" as const,
-		where: {
-			slug: { equals: slug },
-		},
-	});
+	const query = `
+		query GetService($slug: String!) {
+			Services(where: { slug: { equals: $slug } }) {
+				docs {
+					id
+					title
+					slug
+					description
+					content
+					createdAt
+					updatedAt
+				}
+			}
+		}
+	`;
 
-	if (!service.docs[0]) {
+	const data = await fetchGraphQL(query, { slug });
+	const service = data.Services.docs[0];
+
+	if (!service) {
 		throw new Error(`Service ${slug} not found`);
 	}
 
-	return service.docs[0] as Service;
+	return service as Service;
 }

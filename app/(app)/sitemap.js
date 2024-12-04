@@ -12,31 +12,31 @@ export default async function sitemap() {
 	const staticRoutes = [
 		{
 			url: baseUrl,
-			lastModified: new Date(),
+			lastModified: performance(),
 			changeFrequency: "yearly",
 			priority: 1,
 		},
 		{
 			url: `${baseUrl}/about-lanier-plumbing`,
-			lastModified: new Date(),
+			lastModified: performance(),
 			changeFrequency: "monthly",
 			priority: 0.8,
 		},
 		{
 			url: `${baseUrl}/contact-lanier-plumbing`,
-			lastModified: new Date(),
+			lastModified: performance(),
 			changeFrequency: "monthly",
 			priority: 0.8,
 		},
 		{
 			url: `${baseUrl}/lanier-plumbing-services`,
-			lastModified: new Date(),
+			lastModified: performance(),
 			changeFrequency: "weekly",
 			priority: 0.9,
 		},
 		{
 			url: `${baseUrl}/expert-plumbing-tips`,
-			lastModified: new Date(),
+			lastModified: performance(),
 			changeFrequency: "weekly",
 			priority: 0.8,
 		},
@@ -45,7 +45,7 @@ export default async function sitemap() {
 	// Dynamic service routes
 	const serviceRoutes = services.map((service) => ({
 		url: `${baseUrl}/lanier-plumbing-services/${service.slug}`,
-		lastModified: new Date(),
+		lastModified: performance(),
 		changeFrequency: "monthly",
 		priority: 0.7,
 	}));
@@ -53,7 +53,7 @@ export default async function sitemap() {
 	// Dynamic blog post routes
 	const postRoutes = posts.map((post) => ({
 		url: `${baseUrl}/expert-plumbing-tips/${post.slug}`,
-		lastModified: new Date(post.date),
+		lastModified: performance(post.date),
 		changeFrequency: "monthly",
 		priority: 0.6,
 	}));
@@ -61,7 +61,7 @@ export default async function sitemap() {
 	// Dynamic tips routes
 	const tipRoutes = tips.map((tip) => ({
 		url: `${baseUrl}/expert-plumbing-tips/${tip.slug}`,
-		lastModified: new Date(),
+		lastModified: performance(),
 		changeFrequency: "monthly",
 		priority: 0.6,
 	}));

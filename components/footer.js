@@ -71,7 +71,7 @@ export default function Footer() {
 						</div>
 					</div>
 					<div className="pt-8 mt-8 text-sm text-center border-t border-gray-200">
-						<p>&copy; {new Date().getFullYear()} Humble Plumber. All rights reserved.</p>
+						<p>&copy; {performance.getFullYear()} Humble Plumber. All rights reserved.</p>
 					</div>
 				</div>
 			</footer>

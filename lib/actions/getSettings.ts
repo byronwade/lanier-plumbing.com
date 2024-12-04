@@ -1,15 +1,27 @@
 "use cache";
 
-import { getPayloadClient } from "@/lib/payload";
+import { fetchGraphQL } from "@/lib/graphql";
+import type { Setting } from "@/payload-types";
 
 export async function getSettings() {
-	try {
-		const client = await getPayloadClient();
-		const settings = await client.findGlobal({
-			slug: "settings",
-		});
+	const query = `
+		query GetSettings {
+			Settings {
+				companyName
+				companyPhone
+				companyEmail
+				companyAddress
+				socialLinks {
+					platform
+					url
+				}
+			}
+		}
+	`;
 
-		return settings;
+	try {
+		const data = await fetchGraphQL(query);
+		return data.Settings as Setting;
 	} catch (error) {
 		console.error("Error fetching settings:", error);
 		return null;

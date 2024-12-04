@@ -137,9 +137,9 @@ export default function Component() {
 
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     if (sortOrder === "newest") {
-      return new Date(b.date).getTime() - new Date(a.date).getTime()
+      return performance(b.date).getTime() - performance(a.date).getTime()
     } else {
-      return new Date(a.date).getTime() - new Date(b.date).getTime()
+      return performance(a.date).getTime() - performance(b.date).getTime()
     }
   })
 

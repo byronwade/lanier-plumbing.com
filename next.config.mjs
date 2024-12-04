@@ -16,7 +16,6 @@ const nextConfig = {
 		formats: ["image/avif", "image/webp"],
 	},
 	experimental: {
-		reactCompiler: false,
 		inlineCss: true,
 		ppr: true,
 		dynamicIO: true,
@@ -32,6 +31,7 @@ const nextConfig = {
 				dns: false,
 				readline: false,
 				worker_threads: false,
+				express: false,
 			};
 		}
 		return config;

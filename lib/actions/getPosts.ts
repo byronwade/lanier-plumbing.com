@@ -1,28 +1,56 @@
 "use cache";
 
-import { getPayloadClient } from "@/lib/payload";
-import type { Post } from "@/payload-types";
+import { fetchGraphQL } from "@/lib/graphql";
+import type { Post } from "@/lib/types";
+
+interface PostsResponse {
+	Posts: {
+		docs: Post[];
+	};
+}
 
 export async function getPosts() {
-	const payload = await getPayloadClient();
-	const posts = await payload.find({
-		collection: "posts" as const,
-	});
-	return posts.docs as Post[];
+	const query = `
+		query GetPosts {
+			Posts {
+				docs {
+					id
+					title
+					slug
+					content
+					createdAt
+					updatedAt
+				}
+			}
+		}
+	`;
+
+	const data = await fetchGraphQL<PostsResponse>(query);
+	return data.Posts.docs;
 }
 
 export async function getPostBySlug(slug: string) {
-	const payload = await getPayloadClient();
-	const post = await payload.find({
-		collection: "posts" as const,
-		where: {
-			slug: { equals: slug },
-		},
-	});
+	const query = `
+		query GetPost($slug: String!) {
+			Posts(where: { slug: { equals: $slug } }) {
+				docs {
+					id
+					title
+					slug
+					content
+					createdAt
+					updatedAt
+				}
+			}
+		}
+	`;
 
-	if (!post.docs[0]) {
+	const data = await fetchGraphQL<PostsResponse>(query, { slug });
+	const post = data.Posts.docs[0];
+
+	if (!post) {
 		throw new Error(`Post ${slug} not found`);
 	}
 
-	return post.docs[0] as Post;
+	return post;
 }
