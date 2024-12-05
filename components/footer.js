@@ -1,9 +1,21 @@
-import React from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import { FooterCTA } from "@/components/footer-cta";
 
+export function getCurrentYear() {
+	return new Date().getFullYear();
+}
+
 export default function Footer() {
+	const [year, setYear] = useState(2024); // Fallback year for SSR
+
+	useEffect(() => {
+		setYear(new Date().getFullYear());
+	}, []);
+
 	return (
 		<>
 			<FooterCTA />
@@ -71,7 +83,7 @@ export default function Footer() {
 						</div>
 					</div>
 					<div className="pt-8 mt-8 text-sm text-center border-t border-gray-200">
-						<p>&copy; {performance.getFullYear()} Humble Plumber. All rights reserved.</p>
+						<p>&copy; {year} Humble Plumber. All rights reserved.</p>
 					</div>
 				</div>
 			</footer>

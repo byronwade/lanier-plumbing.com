@@ -1,103 +1,47 @@
-import { GlobalConfig } from "payload";
-import { Media } from "./Media";
+import { CollectionConfig } from "payload/types";
 
-export const Settings: GlobalConfig = {
+export const Settings: CollectionConfig = {
 	slug: "settings",
+	admin: {
+		useAsTitle: "companyName",
+	},
 	access: {
-		read: () => true, // Anyone can read settings
+		read: () => true,
 	},
 	fields: [
 		{
-			name: "contact",
-			type: "group",
+			name: "companyName",
+			type: "text",
+			required: true,
+		},
+		{
+			name: "companyPhone",
+			type: "text",
+			required: true,
+		},
+		{
+			name: "companyEmail",
+			type: "email",
+			required: true,
+		},
+		{
+			name: "companyAddress",
+			type: "text",
+			required: true,
+		},
+		{
+			name: "socialLinks",
+			type: "array",
 			fields: [
 				{
-					name: "phoneNumber",
+					name: "platform",
 					type: "text",
 					required: true,
 				},
 				{
-					name: "email",
-					type: "email",
+					name: "url",
+					type: "text",
 					required: true,
-				},
-				{
-					name: "address",
-					type: "group",
-					fields: [
-						{
-							name: "line1",
-							type: "text",
-							required: true,
-						},
-						{
-							name: "line2",
-							type: "text",
-						},
-						{
-							name: "city",
-							type: "text",
-							required: true,
-						},
-						{
-							name: "state",
-							type: "text",
-							required: true,
-						},
-						{
-							name: "zip",
-							type: "text",
-							required: true,
-						},
-					],
-				},
-			],
-		},
-		{
-			name: "social",
-			type: "group",
-			fields: [
-				{
-					name: "facebook",
-					type: "text",
-					label: "Facebook URL",
-				},
-				{
-					name: "twitter",
-					type: "text",
-					label: "Twitter URL",
-				},
-				{
-					name: "instagram",
-					type: "text",
-					label: "Instagram URL",
-				},
-				{
-					name: "linkedin",
-					type: "text",
-					label: "LinkedIn URL",
-				},
-			],
-		},
-		{
-			name: "seo",
-			type: "group",
-			fields: [
-				{
-					name: "defaultTitle",
-					type: "text",
-					label: "Default Page Title",
-				},
-				{
-					name: "defaultDescription",
-					type: "textarea",
-					label: "Default Meta Description",
-				},
-				{
-					name: "defaultImage",
-					type: "upload",
-					relationTo: "media",
-					label: "Default Social Share Image",
 				},
 			],
 		},

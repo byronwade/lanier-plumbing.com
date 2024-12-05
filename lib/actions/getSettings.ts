@@ -6,7 +6,7 @@ import type { Setting } from "@/payload-types";
 export async function getSettings() {
 	const query = `
 		query GetSettings {
-			Settings {
+			Setting {
 				companyName
 				companyPhone
 				companyEmail
@@ -21,7 +21,7 @@ export async function getSettings() {
 
 	try {
 		const data = await fetchGraphQL(query);
-		return data.Settings as Setting;
+		return data.Setting as Setting;
 	} catch (error) {
 		console.error("Error fetching settings:", error);
 		return null;

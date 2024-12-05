@@ -3,7 +3,6 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Suspense } from "react";
-import Providers from "@/app/(app)/providers";
 import { getSettings } from "@/lib/actions/getSettings";
 
 // Optimize font loading
@@ -34,13 +33,11 @@ export default async function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<Providers>
-					<Suspense fallback={<div className="h-16 bg-background" />}>
-						<Header initialSettings={initialSettings} />
-					</Suspense>
-					<main>{children}</main>
-					<Footer />
-				</Providers>
+				<Suspense fallback={<div className="h-16 bg-background" />}>
+					<Header initialSettings={initialSettings} />
+				</Suspense>
+				<main>{children}</main>
+				<Footer />
 			</body>
 		</html>
 	);
