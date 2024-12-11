@@ -29,7 +29,6 @@ export default buildConfig({
 		disablePlaygroundInProduction: false,
 		disable: false,
 		maxComplexity: 1000,
-		depthLimit: 10,
 	},
 	cors: ["http://localhost:3000"],
 	csrf: ["http://localhost:3000"],
