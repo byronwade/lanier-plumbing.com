@@ -8,28 +8,29 @@ import { Posts } from "./collections/Posts";
 import { Services } from "./collections/Services";
 
 export default buildConfig({
-	// If you'd like to use Rich Text, pass your editor here
 	editor: lexicalEditor(),
-
-	// Define and configure your collections in this array
 	collections: [Media, Posts, Services],
-
-	// Your Payload secret - should be a complex and secure string, unguessable
 	secret: process.env.PAYLOAD_SECRET || "",
-	// Whichever Database Adapter you're using should go here
-	// Mongoose is shown as an example, but you can also use Postgres
 	db: postgresAdapter({
 		pool: {
+			connectionString: process.env.DATABASE_URI,
 			ssl: {
 				rejectUnauthorized: false,
 			},
-			connectionString: process.env.DATABASE_URI || "",
 		},
 	}),
-	// If you want to resize images, crop, set focal point, etc.
-	// make sure to install it and pass it to the config.
-	// This is optional - if you don't need to do these things,
-	// you don't need it!
 	sharp,
 	globals: [Settings],
+	typescript: {
+		outputFile: "payload-types.ts",
+	},
+	graphQL: {
+		schemaOutputFile: "generated-schema.graphql",
+		disablePlaygroundInProduction: false,
+		disable: false,
+		maxComplexity: 1000,
+		depthLimit: 10,
+	},
+	cors: ["http://localhost:3000"],
+	csrf: ["http://localhost:3000"],
 });

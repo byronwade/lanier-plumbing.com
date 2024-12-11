@@ -375,28 +375,17 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Setting {
   id: number;
-  contact: {
-    phoneNumber: string;
-    email: string;
-    address: {
-      line1: string;
-      line2?: string | null;
-      city: string;
-      state: string;
-      zip: string;
-    };
-  };
-  social?: {
-    facebook?: string | null;
-    twitter?: string | null;
-    instagram?: string | null;
-    linkedin?: string | null;
-  };
-  seo?: {
-    defaultTitle?: string | null;
-    defaultDescription?: string | null;
-    defaultImage?: (number | null) | Media;
-  };
+  companyName: string;
+  companyPhone: string;
+  companyEmail: string;
+  companyAddress: string;
+  socialLinks?:
+    | {
+        platform: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -405,35 +394,16 @@ export interface Setting {
  * via the `definition` "settings_select".
  */
 export interface SettingsSelect<T extends boolean = true> {
-  contact?:
+  companyName?: T;
+  companyPhone?: T;
+  companyEmail?: T;
+  companyAddress?: T;
+  socialLinks?:
     | T
     | {
-        phoneNumber?: T;
-        email?: T;
-        address?:
-          | T
-          | {
-              line1?: T;
-              line2?: T;
-              city?: T;
-              state?: T;
-              zip?: T;
-            };
-      };
-  social?:
-    | T
-    | {
-        facebook?: T;
-        twitter?: T;
-        instagram?: T;
-        linkedin?: T;
-      };
-  seo?:
-    | T
-    | {
-        defaultTitle?: T;
-        defaultDescription?: T;
-        defaultImage?: T;
+        platform?: T;
+        url?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
