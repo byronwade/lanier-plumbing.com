@@ -1,56 +1,47 @@
-"use cache";
+"use server";
 
-import { fetchGraphQL } from "@/lib/graphql";
-import type { Post } from "@/lib/types";
+import { getPayloadClient } from "../payload";
+import type { Post } from "../../payload-types";
 
-interface PostsResponse {
-	Posts: {
-		docs: Post[];
-	};
+interface PostContent {
+	content: string;
 }
 
-export async function getPosts() {
-	const query = `
-		query GetPosts {
-			Posts {
-				docs {
-					id
-					title
-					slug
-					content
-					createdAt
-					updatedAt
-				}
-			}
-		}
-	`;
+export async function getPosts({ limit = 10, page = 1, where = {} } = {}) {
+	const payload = await getPayloadClient();
+	const posts = await payload.find({
+		collection: "posts",
+		limit,
+		page,
+		where,
+		depth: 2,
+	});
 
-	const data = await fetchGraphQL<PostsResponse>(query);
-	return data.Posts.docs;
+	return posts.docs as Post[];
 }
 
 export async function getPostBySlug(slug: string) {
-	const query = `
-		query GetPost($slug: String!) {
-			Posts(where: { slug: { equals: $slug } }) {
-				docs {
-					id
-					title
-					slug
-					content
-					createdAt
-					updatedAt
-				}
-			}
-		}
-	`;
+	const payload = await getPayloadClient();
+	const post = await payload.find({
+		collection: "posts",
+		where: {
+			slug: {
+				equals: slug,
+			},
+		},
+		limit: 1,
+	});
 
-	const data = await fetchGraphQL<PostsResponse>(query, { slug });
-	const post = data.Posts.docs[0];
-
-	if (!post) {
+	const doc = post.docs[0] as Post & PostContent;
+	if (!doc) {
 		throw new Error(`Post ${slug} not found`);
 	}
 
-	return post;
+	return {
+		data: {
+			title: doc.title,
+			description: typeof doc.content === "string" ? doc.content.slice(0, 160) + "..." : "",
+		},
+		content: doc.content,
+	};
 }

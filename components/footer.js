@@ -9,8 +9,13 @@ export function getCurrentYear() {
 	return new Date().getFullYear();
 }
 
-export default function Footer() {
-	const [year, setYear] = useState(2024); // Fallback year for SSR
+export default function Footer({ initialSettings }) {
+	const [year, setYear] = useState(2024);
+	const phoneNumber = initialSettings?.companyPhone || "(770) 536-1161";
+	const email = initialSettings?.companyEmail || "info@lanierplumbing.com";
+	const address = initialSettings?.companyAddress || "2530 Monroe Dr, Gainesville, GA 30507";
+	const companyName = initialSettings?.companyName || "Lanier Plumbing";
+	const socialLinks = initialSettings?.socialLinks || [];
 
 	useEffect(() => {
 		setYear(new Date().getFullYear());
@@ -23,8 +28,8 @@ export default function Footer() {
 				<div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 					<div className="grid grid-cols-1 gap-8 md:grid-cols-3">
 						<div>
-							<h3 className="mb-4 text-lg font-semibold">Humble Plumber</h3>
-							<p className="text-sm">Your trusted neighborhood plumber serving Humbletown and beyond.</p>
+							<h3 className="mb-4 text-lg font-semibold">{companyName}</h3>
+							<p className="text-sm">Your trusted neighborhood plumber serving Gainesville and beyond.</p>
 						</div>
 						<div>
 							<h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
@@ -53,37 +58,41 @@ export default function Footer() {
 						</div>
 						<div>
 							<h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
-							<p className="mb-2 text-sm">1100 McFarland 400, Suite B, Alpharetta, GA 30004</p>
+							<p className="mb-2 text-sm">{address}</p>
 							<p className="mb-2 text-sm">
 								Phone:{" "}
-								<a href="tel:404-988-4910" className="transition-colors hover:text-red-600">
-									404-988-4910
+								<a href={`tel:${phoneNumber.replace(/\D/g, "")}`} className="transition-colors hover:text-red-600">
+									{phoneNumber}
 								</a>
 							</p>
 							<p className="mb-4 text-sm">
 								Email:{" "}
-								<a href="mailto:byron@lanier-plumbing.com" className="transition-colors hover:text-red-600">
-									byron@lanier-plumbing.com
+								<a href={`mailto:${email}`} className="transition-colors hover:text-red-600">
+									{email}
 								</a>
 							</p>
 							<div className="flex space-x-4">
-								<a href="#" className="text-gray-500 transition-colors hover:text-red-600">
-									<Facebook size={20} />
-									<span className="sr-only">Facebook</span>
-								</a>
-								<a href="#" className="text-gray-500 transition-colors hover:text-red-600">
-									<Instagram size={20} />
-									<span className="sr-only">Instagram</span>
-								</a>
-								<a href="#" className="text-gray-500 transition-colors hover:text-red-600">
-									<Twitter size={20} />
-									<span className="sr-only">Twitter</span>
-								</a>
+								{socialLinks.map((link) => {
+									const Icon = {
+										facebook: Facebook,
+										instagram: Instagram,
+										twitter: Twitter,
+									}[link.platform.toLowerCase()];
+
+									return Icon ? (
+										<a key={link.platform} href={link.url} className="text-gray-500 transition-colors hover:text-red-600" target="_blank" rel="noopener noreferrer">
+											<Icon size={20} />
+											<span className="sr-only">{link.platform}</span>
+										</a>
+									) : null;
+								})}
 							</div>
 						</div>
 					</div>
 					<div className="pt-8 mt-8 text-sm text-center border-t border-gray-200">
-						<p>&copy; {year} Humble Plumber. All rights reserved.</p>
+						<p>
+							&copy; {year} {companyName}. All rights reserved.
+						</p>
 					</div>
 				</div>
 			</footer>

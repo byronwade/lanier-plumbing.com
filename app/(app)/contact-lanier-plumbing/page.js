@@ -1,6 +1,8 @@
 import { Phone, Mail, MapPin, Clock, Wrench } from "lucide-react";
+import { Suspense } from "react";
 
-export default function ContactPage() {
+async function ContactContent() {
+	"use cache";
 	return (
 		<div className="min-h-screen p-4 bg-background text-foreground md:p-8">
 			<div className="max-w-4xl mx-auto">
@@ -85,5 +87,13 @@ export default function ContactPage() {
 				</section>
 			</div>
 		</div>
+	);
+}
+
+export default function ContactPage() {
+	return (
+		<Suspense fallback={<div className="min-h-screen animate-pulse" />}>
+			<ContactContent />
+		</Suspense>
 	);
 }

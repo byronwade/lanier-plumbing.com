@@ -1,10 +1,19 @@
-import { Suspense } from "react";
+import { getServices } from "@/lib/actions/getServices";
 import PageHeader from "@/components/page-header";
 import Link from "next/link";
-import { getServices } from "@/lib/actions/getServices";
+import { Suspense } from "react";
 
 async function ServicesList() {
+	"use cache";
 	const services = await getServices();
+
+	if (!services?.length) {
+		return (
+			<div className="container max-w-4xl px-4 mx-auto">
+				<p className="text-center text-gray-600">No services available at the moment.</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="container max-w-4xl px-4 mx-auto">
@@ -22,13 +31,22 @@ async function ServicesList() {
 	);
 }
 
-export default function Services() {
+async function ServicesContent() {
+	"use cache";
 	return (
 		<div className="py-8">
 			<PageHeader title="Our Services" subtitle="Professional plumbing services for your home and business" />
-			<Suspense fallback={<div className="h-32 bg-gray-100 animate-pulse" />}>
+			<Suspense fallback={<div className="container max-w-4xl px-4 mx-auto animate-pulse">Loading services...</div>}>
 				<ServicesList />
 			</Suspense>
 		</div>
+	);
+}
+
+export default function Services() {
+	return (
+		<Suspense fallback={<div className="min-h-screen animate-pulse" />}>
+			<ServicesContent />
+		</Suspense>
 	);
 }

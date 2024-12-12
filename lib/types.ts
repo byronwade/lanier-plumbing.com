@@ -1,50 +1,23 @@
-export interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+// Base document structure
+export interface BaseDoc {
+	id: string;
+	title: string;
+	slug: string;
+	content: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
-export interface Service {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+// Collection response structure
+export interface CollectionResponse<T> {
+	docs: T[];
 }
 
+// Settings type
 export interface Setting {
-  companyName: string;
-  companyPhone: string;
-  companyEmail: string;
-  companyAddress: string;
-  socialLinks: {
-    platform: string;
-    url: string;
-  }[];
+	companyName: string;
+	companyPhone: string;
+	companyEmail: string;
+	companyAddress: string;
+	socialLinks: Array<{ platform: string; url: string }>;
 }
-
-export interface Tip {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  content: string;
-  createdAt: string;
-}
-
-export interface GraphQLResponse<T> {
-  data: T;
-  errors?: Array<{
-    message: string;
-    locations?: Array<{
-      line: number;
-      column: number;
-    }>;
-    path?: string[];
-  }>;
-} 

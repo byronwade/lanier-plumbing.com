@@ -1,20 +1,21 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/actions/getPosts";
-import { Metadata } from "next";
+import { Suspense } from "react";
 
-type Props = {
-	params: Promise<{
+interface Props {
+	params: {
 		slug: string;
-	}>;
-	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
+	};
+}
 
-export default async function Post({ params, searchParams }: Props) {
-	const [nextParams, nextSearchParams] = await Promise.all([params, searchParams]);
-
+async function PostContent({ slug }: { slug: string }) {
 	try {
-		const { data, content } = await getPostBySlug(nextParams.slug);
+		const { data, content } = await getPostBySlug(slug);
+
+		if (!data) {
+			notFound();
+		}
 
 		return (
 			<div className="container max-w-4xl px-4 py-8 mx-auto">
@@ -35,20 +36,11 @@ export default async function Post({ params, searchParams }: Props) {
 	}
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const nextParams = await params;
-
-	try {
-		const { data } = await getPostBySlug(nextParams.slug);
-
-		return {
-			title: data.title,
-			description: data.description,
-		};
-	} catch {
-		return {
-			title: "Post Not Found",
-			description: "The requested post could not be found",
-		};
-	}
+export default async function Post({ params }: Props) {
+	const nextjs15 = await params;
+	return (
+		<Suspense fallback={<div className="container max-w-4xl px-4 py-8 mx-auto">Loading...</div>}>
+			<PostContent slug={nextjs15.slug} />
+		</Suspense>
+	);
 }

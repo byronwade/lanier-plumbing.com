@@ -4,12 +4,21 @@ import PageHeader from "@/components/page-header";
 import Link from "next/link";
 
 async function PostsList() {
+	"use cache";
 	const posts = await getPosts();
+
+	if (!posts?.length) {
+		return (
+			<div className="container max-w-4xl px-4 mx-auto">
+				<p className="text-center text-gray-600">No posts available at the moment.</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="container max-w-4xl px-4 mx-auto">
 			<ul className="grid gap-4 md:grid-cols-2">
-				{posts?.map((post) => (
+				{posts.map((post) => (
 					<li key={post.slug} className="p-4 transition-colors border rounded-lg hover:bg-gray-50">
 						<Link href={`/expert-plumbing-tips/${post.slug}`} prefetch={true} className="block">
 							<h2 className="mb-2 text-xl font-semibold">{post.title}</h2>
@@ -23,17 +32,22 @@ async function PostsList() {
 	);
 }
 
-export default function ExpertTips() {
+async function ExpertTipsContent() {
+	"use cache";
 	return (
 		<div className="py-8">
 			<PageHeader title="Expert Tips" subtitle="Learn more about plumbing from our experts" />
-			<Suspense fallback={<div className="h-32 bg-gray-100 animate-pulse" />}>
+			<Suspense fallback={<div className="container max-w-4xl px-4 mx-auto animate-pulse">Loading posts...</div>}>
 				<PostsList />
 			</Suspense>
 		</div>
 	);
 }
 
-// Add static config
-export const dynamic = "force-static";
-export const revalidate = 3600;
+export default function ExpertTips() {
+	return (
+		<Suspense fallback={<div className="min-h-screen animate-pulse" />}>
+			<ExpertTipsContent />
+		</Suspense>
+	);
+}

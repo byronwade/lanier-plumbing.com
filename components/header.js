@@ -19,9 +19,8 @@ export function NavLink({ href, children }) {
 
 export default function Header({ initialSettings }) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-	const phoneNumber = initialSettings?.contact?.phoneNumber || "404-988-4910";
-	const address = initialSettings?.contact?.address;
-	const formattedAddress = address ? `${address.city}, ${address.state}` : "Cherokee Counties & Beyond";
+	const phoneNumber = initialSettings?.companyPhone || "(770) 536-1161";
+	const address = initialSettings?.companyAddress || "2530 Monroe Dr, Gainesville, GA 30507";
 
 	return (
 		<header className="bg-white">
@@ -32,7 +31,7 @@ export default function Header({ initialSettings }) {
 							<div className="relative w-7 h-7 sm:w-8 sm:h-8">
 								<Phone className="w-full h-full text-red-600" />
 							</div>
-							<span className="text-base font-bold text-gray-900 sm:text-lg">Lanier Plumbing</span>
+							<span className="text-base font-bold text-gray-900 sm:text-lg">{initialSettings?.companyName || "Lanier Plumbing"}</span>
 						</Link>
 					</div>
 
@@ -80,12 +79,12 @@ export default function Header({ initialSettings }) {
 							</div>
 							<div className="flex items-center">
 								<MapPin className="w-4 h-4 mr-2 text-red-600" />
-								<span>Serving {formattedAddress}</span>
+								<span>{address}</span>
 							</div>
 						</div>
 						<div className="flex items-center">
 							<Award className="w-4 h-4 mr-2 text-red-600" />
-							<span>Your Trusted Neighborhood Humble Plumber</span>
+							<span>Your Trusted Neighborhood Plumber</span>
 						</div>
 					</div>
 				</div>

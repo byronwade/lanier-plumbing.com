@@ -1,20 +1,24 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServiceBySlug } from "@/lib/actions/getServices";
-import { Metadata } from "next";
+import { Suspense } from "react";
 
 type Props = {
-	params: Promise<{
+	params: {
 		slug: string;
-	}>;
-	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+	};
 };
 
-export default async function ServicePage({ params, searchParams }: Props) {
-	const [nextParams, nextSearchParams] = await Promise.all([params, searchParams]);
-
+async function ServiceContent({ slug }: { slug: string }) {
+	"use cache";
 	try {
-		const { data, content } = await getServiceBySlug(nextParams.slug);
+		const serviceData = await getServiceBySlug(slug);
+
+		if (!serviceData) {
+			notFound();
+		}
+
+		const { data, content } = serviceData;
 
 		return (
 			<div className="container max-w-4xl px-4 py-8 mx-auto">
@@ -35,24 +39,11 @@ export default async function ServicePage({ params, searchParams }: Props) {
 	}
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const nextParams = await params;
-
-	try {
-		const { data } = await getServiceBySlug(nextParams.slug);
-
-		return {
-			title: data.title,
-			description: data.description,
-		};
-	} catch {
-		return {
-			title: "Service Not Found",
-			description: "The requested service could not be found",
-		};
-	}
+export default async function ServicePage({ params }: Props) {
+	const nextjs15 = await params;
+	return (
+		<Suspense fallback={<div className="container max-w-4xl px-4 py-8 mx-auto">Loading...</div>}>
+			<ServiceContent slug={nextjs15.slug} />
+		</Suspense>
+	);
 }
-
-// Add static config
-export const dynamic = "force-static";
-export const revalidate = 3600;

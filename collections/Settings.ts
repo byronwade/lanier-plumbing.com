@@ -1,9 +1,9 @@
-import { CollectionConfig } from "payload/types";
+import { GlobalConfig } from "payload";
 
-export const Settings: CollectionConfig = {
+export const Settings: GlobalConfig = {
 	slug: "settings",
 	admin: {
-		useAsTitle: "companyName",
+		group: "Site Settings",
 	},
 	access: {
 		read: () => true,
@@ -13,25 +13,39 @@ export const Settings: CollectionConfig = {
 			name: "companyName",
 			type: "text",
 			required: true,
+			defaultValue: "Lanier Plumbing",
 		},
 		{
 			name: "companyPhone",
 			type: "text",
 			required: true,
+			defaultValue: "(770) 536-1161",
 		},
 		{
 			name: "companyEmail",
 			type: "email",
 			required: true,
+			defaultValue: "info@lanierplumbing.com",
 		},
 		{
 			name: "companyAddress",
 			type: "text",
 			required: true,
+			defaultValue: "2530 Monroe Dr, Gainesville, GA 30507",
 		},
 		{
 			name: "socialLinks",
 			type: "array",
+			defaultValue: [
+				{
+					platform: "facebook",
+					url: "https://facebook.com/lanierplumbing",
+				},
+				{
+					platform: "instagram",
+					url: "https://instagram.com/lanierplumbing",
+				},
+			],
 			fields: [
 				{
 					name: "platform",

@@ -5,7 +5,6 @@ import Footer from "@/components/footer";
 import { Suspense } from "react";
 import { getSettings } from "@/lib/actions/getSettings";
 
-// Optimize font loading
 const inter = Inter({
 	subsets: ["latin"],
 	display: "swap",
@@ -26,19 +25,31 @@ export const metadata = {
 	},
 };
 
-export default async function RootLayout({ children }) {
-	const initialSettings = await getSettings();
-	console.log(initialSettings);
+async function LayoutContent({ children }) {
+	"use cache";
+	let settings;
+	try {
+		settings = await getSettings();
+	} catch (error) {
+		console.error("Failed to load settings:", error);
+		settings = null;
+	}
 
 	return (
 		<html lang="en">
 			<body className={inter.className}>
 				<Suspense fallback={<div className="h-16 bg-background" />}>
-					<Header initialSettings={initialSettings} />
+					<Header initialSettings={settings} />
 				</Suspense>
-				<main>{children}</main>
-				<Footer />
+				<Suspense fallback={<div className="min-h-screen animate-pulse" />}>{children}</Suspense>
+				<Suspense fallback={<div className="h-16 bg-background" />}>
+					<Footer initialSettings={settings} />
+				</Suspense>
 			</body>
 		</html>
 	);
+}
+
+export default function RootLayout({ children }) {
+	return <LayoutContent>{children}</LayoutContent>;
 }
