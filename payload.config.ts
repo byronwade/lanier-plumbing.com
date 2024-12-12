@@ -1,6 +1,7 @@
 import sharp from "sharp";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { buildConfig } from "payload";
 import { Settings } from "./collections/Settings";
 import { Media } from "./collections/Media";
@@ -24,12 +25,18 @@ export default buildConfig({
 	typescript: {
 		outputFile: "payload-types.ts",
 	},
-	graphQL: {
-		schemaOutputFile: "generated-schema.graphql",
-		disablePlaygroundInProduction: false,
-		disable: false,
-		maxComplexity: 1000,
-	},
+
+	plugins: [
+		vercelBlobStorage({
+			enabled: true, // Optional, defaults to true
+			// Specify which collections should use Vercel Blob
+			collections: {
+				media: true,
+			},
+			// Token provided by Vercel once Blob storage is added to your Vercel project
+			token: process.env.BLOB_READ_WRITE_TOKEN,
+		}),
+	],
 	cors: ["http://localhost:3000"],
 	csrf: ["http://localhost:3000"],
 });
