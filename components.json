@@ -16,6 +16,7 @@
 		"hooks": "@/hooks",
 		"actions": "@/actions",
 		"content": "@/content",
+		"blocks": "@/blocks",
 		"*": "@/app/*"
 	}
 }

@@ -1,7 +1,25 @@
 import { CollectionConfig } from "payload";
+import { unstable_cache } from "next/cache";
+import payload from "payload";
+
+// Cache post queries
+export const getCachedPosts = unstable_cache(
+	async (query = {}) => {
+		const posts = await payload.find({
+			collection: "posts",
+			...query,
+		});
+		return posts;
+	},
+	["posts"],
+	{ revalidate: 60 }
+);
 
 export const Posts: CollectionConfig = {
 	slug: "posts",
+	admin: {
+		useAsTitle: "title",
+	},
 	access: {
 		read: () => true,
 	},
@@ -11,18 +29,6 @@ export const Posts: CollectionConfig = {
 			type: "text",
 			required: true,
 		},
-		{
-			name: "slug",
-			type: "text",
-			required: true,
-		},
-		{
-			name: "content",
-			type: "richText",
-		},
-		{
-			name: "date",
-			type: "date",
-		},
+		// ... other fields
 	],
 };

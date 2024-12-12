@@ -10,6 +10,15 @@ export const Settings: GlobalConfig = {
 	},
 	fields: [
 		{
+			name: "homePage",
+			type: "relationship",
+			relationTo: "pages",
+			required: true,
+			admin: {
+				description: "Select which page should be displayed as the home page",
+			},
+		},
+		{
 			name: "companyName",
 			type: "text",
 			required: true,

@@ -1,42 +1,43 @@
-import sharp from "sharp";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { postgresAdapter } from "@payloadcms/db-postgres";
+import { vercelPostgresAdapter } from "@payloadcms/db-vercel-postgres";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { buildConfig } from "payload";
-import { Settings } from "./collections/Settings";
-import { Media } from "./collections/Media";
-import { Posts } from "./collections/Posts";
-import { Services } from "./collections/Services";
+import { seoPlugin } from "@payloadcms/plugin-seo";
+import type { Config } from "payload";
+import { Media, Pages, Posts, Services, Settings, Users } from "./collections";
+import { blocks } from "./blocks";
 
 export default buildConfig({
 	editor: lexicalEditor(),
-	collections: [Media, Posts, Services],
+	collections: [Media, Pages, Posts, Services, Users],
 	secret: process.env.PAYLOAD_SECRET || "",
-	db: postgresAdapter({
-		pool: {
-			connectionString: process.env.DATABASE_URI,
-			ssl: {
-				rejectUnauthorized: false,
-			},
-		},
-	}),
-	sharp,
-	globals: [Settings],
+	db: vercelPostgresAdapter(),
 	typescript: {
 		outputFile: "payload-types.ts",
 	},
-
+	globals: [Settings],
+	admin: {
+		components: {
+			blocks: blocks,
+		},
+	},
 	plugins: [
 		vercelBlobStorage({
-			enabled: true, // Optional, defaults to true
-			// Specify which collections should use Vercel Blob
+			enabled: true,
 			collections: {
 				media: true,
 			},
-			// Token provided by Vercel once Blob storage is added to your Vercel project
-			token: process.env.BLOB_READ_WRITE_TOKEN,
+			token: process.env.BLOB_READ_WRITE_TOKEN || "",
+		}),
+		seoPlugin({
+			collections: ["pages"],
+			uploadsCollection: "media",
+			generateTitle: ({ doc }) => doc.pageMeta?.title || `${doc.title} — Lanier Plumbing`,
+			generateDescription: ({ doc }) => doc.pageMeta?.description || "",
+			generateImage: ({ doc }) => doc.pageMeta?.image || null,
+			generateURL: ({ doc }) => `https://lanier-plumbing.com/${doc.slug}`,
 		}),
 	],
 	cors: ["http://localhost:3000"],
 	csrf: ["http://localhost:3000"],
-});
+} as Config);
