@@ -1,59 +1,13 @@
-"use cache";
+"use server";
 
 import { getPayloadClient } from "../payload";
 import type { Page } from "../../payload-types";
 import { getSettings } from "./getSettings";
+import { unstable_cache } from "next/cache";
 
-interface GetPagesOptions {
-	page?: number;
-	limit?: number;
-	sort?: string;
-}
-
-// Helper function to check if a page is the home page
-export async function isHomePage(pageId: string) {
-	try {
-		const settings = await getSettings();
-		return settings?.homePage?.id === pageId;
-	} catch (error) {
-		console.error("Error checking if page is home:", error);
-		return false;
-	}
-}
-
-// Get page by ID
-async function getPageById(id: string) {
-	try {
-		const payload = await getPayloadClient();
-		const page = await payload.findByID({
-			collection: "pages",
-			id,
-			depth: 2,
-			draft: false,
-		});
-		return page as Page;
-	} catch (error) {
-		console.error("Error fetching page by ID:", error);
-		return null;
-	}
-}
-
-export async function getPageBySlug(slug: string) {
-	try {
-		console.log("Fetching page by slug:", slug);
-
-		// If it's the root path, get the home page from settings
-		if (!slug || slug === "/") {
-			const settings = await getSettings();
-			if (!settings?.homePage?.id) {
-				console.error("No home page set in settings");
-				return null;
-			}
-
-			return getPageById(settings.homePage.id);
-		}
-
-		// For all other pages, search by slug
+// Cache page queries
+const getCachedPageBySlug = unstable_cache(
+	async (slug: string) => {
 		const payload = await getPayloadClient();
 		const pages = await payload.find({
 			collection: "pages",
@@ -63,48 +17,116 @@ export async function getPageBySlug(slug: string) {
 				},
 			},
 			depth: 2,
-			draft: false,
+			draft: true,
 			limit: 1,
 		});
+		return pages.docs[0] as Page | null;
+	},
+	["pages-by-slug"],
+	{
+		revalidate: 60,
+		tags: ["pages"],
+	}
+);
 
-		if (!pages.docs[0]) {
-			return null;
+const getCachedPageById = unstable_cache(
+	async (id: string | number) => {
+		const payload = await getPayloadClient();
+		const page = await payload.findByID({
+			collection: "pages",
+			id: id.toString(),
+			depth: 2,
+			draft: true,
+		});
+		return page as Page;
+	},
+	["pages-by-id"],
+	{
+		revalidate: 60,
+		tags: ["pages"],
+	}
+);
+
+// Helper function to check if a page is the home page
+export async function isHomePage(pageId: string) {
+	try {
+		const settings = await getSettings();
+		return settings?.homePage?.id?.toString() === pageId;
+	} catch (error) {
+		console.error("Error checking if page is home:", error);
+		return false;
+	}
+}
+
+// Get page by ID with caching
+async function getPageById(id: string | number) {
+	try {
+		return await getCachedPageById(id);
+	} catch (error) {
+		console.error("Error fetching page by ID:", error);
+		return null;
+	}
+}
+
+export async function getPageBySlug(slug: string) {
+	try {
+		// If it's the root path, get the home page from settings
+		if (!slug || slug === "/") {
+			const settings = await getSettings();
+			if (!settings?.homePage?.id) {
+				console.error("No home page set in settings");
+				return null;
+			}
+			return await getPageById(settings.homePage.id);
 		}
 
-		// Cache the result by ID for future use
-		return getPageById(pages.docs[0].id);
+		// For all other pages, use cached query
+		const page = await getCachedPageBySlug(slug);
+		if (!page) return null;
+
+		return page;
 	} catch (error) {
 		console.error("Error in getPageBySlug:", error);
 		return null;
 	}
 }
 
-export async function getAllPages({ page = 1, limit = 10, sort = "-createdAt" }: GetPagesOptions = {}) {
-	try {
-		console.log("Fetching all pages", { page, limit, sort });
+// Cache all pages query
+const getCachedAllPages = unstable_cache(
+	async ({ page = 1, limit = 10, sort = "-createdAt", homePageId }: { page: number; limit: number; sort: string; homePageId?: string | number }) => {
 		const payload = await getPayloadClient();
-
-		// Get settings to identify home page
-		const settings = await getSettings();
-		const homePageId = settings?.homePage?.id;
-
-		// Get all pages except home page
-		const pages = await payload.find({
+		return await payload.find({
 			collection: "pages",
 			where:
 				homePageId ?
 					{
 						id: {
-							not_equals: homePageId,
+							not_equals: homePageId.toString(),
 						},
 					}
 				:	{},
 			depth: 1,
-			draft: false,
+			draft: true,
 			page,
 			limit,
 			sort,
 		});
+	},
+	["all-pages"],
+	{
+		revalidate: 60,
+		tags: ["pages"],
+	}
+);
+
+export async function getAllPages({ page = 1, limit = 10, sort = "-createdAt" } = {}) {
+	try {
+		// Get settings to identify home page
+		const settings = await getSettings();
+		const homePageId = settings?.homePage?.id;
+
+		// Get all pages except home page using cached query
+		const pages = await getCachedAllPages({ page, limit, sort, homePageId });
 
 		return {
 			docs: pages.docs as Page[],

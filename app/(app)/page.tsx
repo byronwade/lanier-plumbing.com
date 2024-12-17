@@ -1,11 +1,10 @@
-"use cache";
-
 import { getPageBySlug } from "@/lib/actions/getPages";
 import { getSettings } from "@/lib/actions/getSettings";
 import { notFound } from "next/navigation";
 import type { Page } from "@/payload-types";
 import type { Metadata } from "next";
-import PageContent from "./components/PageContent";
+import PageContent from "../../components/PageContent";
+import type { Media } from "@/payload-types";
 
 const defaultMetadata: Metadata = {
 	title: "Home",
@@ -17,7 +16,13 @@ const defaultMetadata: Metadata = {
 
 async function getPageData() {
 	const settings = await getSettings();
-	if (!settings?.homePage?.id) {
+	if (!settings?.homePage) {
+		return null;
+	}
+
+	// If homePage is a number, use it as the ID
+	const homePageId = typeof settings.homePage === "number" ? settings.homePage : settings.homePage.id;
+	if (!homePageId) {
 		return null;
 	}
 
@@ -32,13 +37,15 @@ export async function generateMetadata(): Promise<Metadata> {
 			return defaultMetadata;
 		}
 
+		const ogImage = data.pageMeta?.image && "url" in data.pageMeta.image ? [{ url: data.pageMeta.image.url }] : [];
+
 		return {
 			title: data.pageMeta?.title || data.title,
 			description: data.pageMeta?.description || defaultMetadata.description,
 			openGraph: {
 				title: data.pageMeta?.title || data.title,
 				description: data.pageMeta?.description || defaultMetadata.description,
-				images: data.pageMeta?.image ? [data.pageMeta.image] : [],
+				images: ogImage,
 			},
 		};
 	} catch (error) {

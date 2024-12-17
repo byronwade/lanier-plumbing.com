@@ -1,86 +1,66 @@
-"use cache";
+"use server";
 
 import { Suspense } from "react";
 import { LoadingSkeleton } from "@/components/skeletons/LoadingSkeleton";
-import dynamic from "next/dynamic";
 import { getPageBySlug } from "@/lib/actions/getPages";
 import { notFound } from "next/navigation";
 import { getSettings } from "@/lib/actions/getSettings";
 import type { Metadata } from "next";
 import type { Page } from "@/payload-types";
+import PageContent from "@/components/PageContent";
 
 interface PageProps {
-	params: Promise<{
+	params: {
 		slug?: string[];
-	}>;
+	};
 }
 
-// Dynamic imports for blocks
-const Hero = dynamic(() => import("@/blocks/hero/hero"), {
-	loading: () => <LoadingSkeleton />,
-});
+// Helper function to get page data
+async function getPageData(slug: string | null): Promise<Page | null> {
+	try {
+		if (!slug) {
+			const settings = await getSettings();
+			if (!settings?.homePage) return null;
 
-// Dynamic import for Lexical renderer
-const LexicalRenderer = dynamic(() => import("@/components/LexicalRenderer"), {
-	loading: () => <LoadingSkeleton />,
-});
+			// If homePage is a number, use it as the ID
+			const homePageId = typeof settings.homePage === "number" ? settings.homePage : settings.homePage.id;
+			if (!homePageId) return null;
+
+			return await getPageBySlug("/");
+		}
+		return await getPageBySlug(slug);
+	} catch (error) {
+		console.error("Error fetching page data:", error);
+		return null;
+	}
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
 	const nextjs15 = await params;
-	const settings = await getSettings();
-
-	// Handle root path - redirect to home page
-	if (!nextjs15?.slug || nextjs15.slug.length === 0) {
-		if (!settings?.homePage?.id) {
-			notFound();
-		}
-		const homePage = await getPageBySlug("/");
-		if (!homePage) {
-			notFound();
-		}
-		return {
-			title: homePage.pageMeta?.title || homePage.title,
-			description: homePage.pageMeta?.description,
-			openGraph: {
-				images: homePage.pageMeta?.image ? [homePage.pageMeta.image] : [],
-			},
-		};
-	}
-
-	const slug = nextjs15.slug.join("/");
-	const page = await getPageBySlug(slug);
+	const slug = nextjs15.slug ? nextjs15.slug.join("/") : null;
+	const page = await getPageData(slug);
 
 	if (!page) {
 		notFound();
 	}
 
+	const ogImage = page.pageMeta?.image && "url" in page.pageMeta.image ? [{ url: page.pageMeta.image.url }] : [];
+
 	return {
 		title: page.pageMeta?.title || page.title,
 		description: page.pageMeta?.description,
 		openGraph: {
-			images: page.pageMeta?.image ? [page.pageMeta.image] : [],
+			title: page.pageMeta?.title || page.title,
+			description: page.pageMeta?.description,
+			images: ogImage,
 		},
 	};
 }
 
 export default async function Page({ params }: PageProps) {
 	const nextjs15 = await params;
-	const settings = await getSettings();
-
-	// Handle root path - should be handled by app/page.tsx
-	if (!nextjs15?.slug || nextjs15.slug.length === 0) {
-		if (!settings?.homePage?.id) {
-			notFound();
-		}
-		const homePage = await getPageBySlug("/") as Page;
-		if (!homePage) {
-			notFound();
-		}
-		return homePage;
-	}
-
-	const slug = nextjs15.slug.join("/");
-	const data = await getPageBySlug(slug) as Page;
+	const slug = nextjs15.slug ? nextjs15.slug.join("/") : null;
+	const data = await getPageData(slug);
 
 	if (!data) {
 		notFound();
@@ -88,37 +68,7 @@ export default async function Page({ params }: PageProps) {
 
 	return (
 		<Suspense fallback={<LoadingSkeleton />}>
-			{/* Layout Blocks */}
-			{data.layout?.length > 0 && (
-				<div className="w-full">
-					{data.layout.map((block, index) => {
-						switch (block.blockType) {
-							case "hero":
-								return <Hero key={index} {...block} />;
-							default:
-								return null;
-						}
-					})}
-				</div>
-			)}
-
-			{/* Rich Text Content */}
-			{data.content && (
-				<div className="container px-4 py-12 mx-auto">
-					<div className="prose prose-lg max-w-none">
-						<LexicalRenderer content={data.content} />
-					</div>
-				</div>
-			)}
-
-			{/* Show message if no content or layout */}
-			{!data.layout?.length && !data.content && (
-				<div className="container px-4 py-12 mx-auto">
-					<div className="text-center text-gray-600">
-						{data.title ? `${data.title} has no content yet.` : "This page has no content yet."}
-					</div>
-				</div>
-			)}
+			<PageContent key={data.id} data={data} />
 		</Suspense>
 	);
 }

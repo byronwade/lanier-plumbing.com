@@ -7,17 +7,39 @@ interface PostContent {
 	content: string;
 }
 
-export async function getPosts({ limit = 10, page = 1, where = {} } = {}) {
+interface GetPostsOptions {
+	limit?: number;
+	page?: number;
+	where?: Record<string, any>;
+}
+
+interface PostsResponse {
+	docs: Post[];
+	totalDocs: number;
+	totalPages: number;
+	page: number;
+	hasNextPage: boolean;
+	hasPrevPage: boolean;
+}
+
+export async function getPosts({ limit = 10, page = 1, where = {} }: GetPostsOptions = {}): Promise<PostsResponse> {
 	const payload = await getPayloadClient();
 	const posts = await payload.find({
 		collection: "posts",
 		limit,
 		page,
 		where,
-		depth: 2,
+		depth: 1,
 	});
 
-	return posts.docs as Post[];
+	return {
+		docs: posts.docs as Post[],
+		totalDocs: posts.totalDocs,
+		totalPages: posts.totalPages,
+		page: posts.page,
+		hasNextPage: posts.hasNextPage,
+		hasPrevPage: posts.hasPrevPage,
+	};
 }
 
 export async function getPostBySlug(slug: string) {
@@ -30,6 +52,7 @@ export async function getPostBySlug(slug: string) {
 			},
 		},
 		limit: 1,
+		depth: 1,
 	});
 
 	const doc = post.docs[0] as Post & PostContent;

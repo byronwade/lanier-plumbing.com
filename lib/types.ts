@@ -15,6 +15,10 @@ export interface CollectionResponse<T> {
 
 // Settings type
 export interface Setting {
+	homePage: {
+		id: string | number;
+		value?: any;
+	};
 	companyName: string;
 	companyPhone: string;
 	companyEmail: string;

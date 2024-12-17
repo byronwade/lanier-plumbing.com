@@ -1,9 +1,8 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { Suspense } from "react";
 import { getSettings } from "@/lib/actions/getSettings";
+import "./globals.css";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -25,8 +24,7 @@ export const metadata = {
 	},
 };
 
-async function LayoutContent({ children }) {
-	"use cache";
+export default async function RootLayout({ children }) {
 	let settings;
 	try {
 		settings = await getSettings();
@@ -38,18 +36,10 @@ async function LayoutContent({ children }) {
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<Suspense fallback={<div className="h-16 bg-background" />}>
-					<Header initialSettings={settings} />
-				</Suspense>
-				<Suspense fallback={<div className="min-h-screen animate-pulse" />}>{children}</Suspense>
-				<Suspense fallback={<div className="h-16 bg-background" />}>
-					<Footer initialSettings={settings} />
-				</Suspense>
+				<Header initialSettings={settings} />
+				{children}
+				<Footer initialSettings={settings} />
 			</body>
 		</html>
 	);
-}
-
-export default function RootLayout({ children }) {
-	return <LayoutContent>{children}</LayoutContent>;
 }
