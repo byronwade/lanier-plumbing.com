@@ -1,23 +1,29 @@
-"use cache";
-
+import { unstable_cache } from "next/cache";
 import { getPayloadClient } from "../payload";
 import type { Setting } from "../../payload-types";
 
 // Get raw settings
-async function getRawSettings() {
-	try {
-		const payload = await getPayloadClient();
-		const settings = await payload.findGlobal({
-			slug: "settings",
-			depth: 2,
-			draft: false,
-		});
-		return settings;
-	} catch (error) {
-		console.error("Error fetching raw settings:", error);
-		return null;
+const getRawSettings = unstable_cache(
+	async () => {
+		try {
+			const payload = await getPayloadClient();
+			const settings = await payload.findGlobal({
+				slug: "settings",
+				depth: 2,
+				draft: false,
+			});
+			return settings;
+		} catch (error) {
+			console.error("Error fetching raw settings:", error);
+			return null;
+		}
+	},
+	["settings"],
+	{
+		revalidate: 30, // Revalidate every 30 seconds
+		tags: ["settings"],
 	}
-}
+);
 
 // Export the processed settings with proper typing
 export async function getSettings() {

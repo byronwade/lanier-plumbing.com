@@ -19,7 +19,7 @@ const nextConfig = {
 	experimental: {
 		inlineCss: true,
 		ppr: true,
-		dynamicIO: true,
+		//dynamicIO: true,
 		typedRoutes: true,
 		reactCompiler: false,
 		optimizeCss: true,
