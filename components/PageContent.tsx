@@ -3,7 +3,7 @@
 import { ErrorBoundary } from "react-error-boundary";
 import dynamic from "next/dynamic";
 import type { Page } from "@/payload-types";
-import type { ElementType } from "react";
+import type { ElementType, ComponentType } from "react";
 import { memo, Suspense } from "react";
 
 // Dynamic import for RichText to avoid SSR issues
@@ -16,39 +16,47 @@ const LexicalRenderer = dynamic(() => import("@/components/LexicalRenderer").the
 const Hero = dynamic(() => import("@/blocks/hero/hero"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
+
 const Facts = dynamic(() => import("@/blocks/facts/facts"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
+
 const CostSaving = dynamic(() => import("@/blocks/cost-saving/cost-saving"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
+
 const Services = dynamic(() => import("@/blocks/services/services"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
+
 const FAQ = dynamic(() => import("@/blocks/faq/faq"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
+
 const Testimonials = dynamic(() => import("@/blocks/testimonials/testimonials"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
+
 const Contact = dynamic(() => import("@/blocks/contact/contact"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
+
 const Blog = dynamic(() => import("@/blocks/blog/blog"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
+
 const About = dynamic(() => import("@/blocks/about/about"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
-});
+}) as ComponentType<any>;
 
 interface PageContentProps {
 	data: Page;
@@ -59,8 +67,14 @@ interface ErrorFallbackProps {
 	componentName?: string;
 }
 
+interface PageBlock {
+	blockType: string;
+	id?: string;
+	[key: string]: any;
+}
+
 const BlockSkeleton = memo(function BlockSkeleton() {
-	return <div className="w-full h-96 animate-pulse bg-gray-100 rounded-lg" />;
+	return <div className="w-full bg-gray-100 rounded-lg h-96 animate-pulse" />;
 });
 
 const ErrorFallback = memo(function ErrorFallback({ error, componentName }: ErrorFallbackProps) {
@@ -76,7 +90,7 @@ const ErrorFallback = memo(function ErrorFallback({ error, componentName }: Erro
 type BlockType = "hero" | "facts" | "costSaving" | "services" | "faq" | "testimonials" | "contact" | "blog" | "about";
 
 // Map of block types to components
-const blockComponents: Record<BlockType, ElementType> = {
+const blockComponents: Record<BlockType, ComponentType<any>> = {
 	hero: Hero,
 	facts: Facts,
 	costSaving: CostSaving,
@@ -88,12 +102,12 @@ const blockComponents: Record<BlockType, ElementType> = {
 	about: About,
 };
 
-const PageBlocks = memo(function PageBlocks({ layout }: { layout: NonNullable<Page["layout"]> }) {
+const PageBlocks = memo(function PageBlocks({ layout }: { layout: PageBlock[] }) {
 	if (!layout?.length) return null;
 
 	return (
 		<>
-			{layout.map((block, i) => {
+			{layout.map((block: PageBlock, i: number) => {
 				if (!block?.blockType) return null;
 
 				const BlockComponent = blockComponents[block.blockType as BlockType];

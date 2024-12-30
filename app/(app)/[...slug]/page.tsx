@@ -3,11 +3,12 @@
 import { Suspense } from "react";
 import { LoadingSkeleton } from "@/components/skeletons/LoadingSkeleton";
 import { getPageBySlug } from "@/lib/actions/getPages";
-import { notFound } from "next/navigation";
 import { getSettings } from "@/lib/actions/getSettings";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import type { Page } from "@/payload-types";
 import PageContent from "@/components/PageContent";
+import { unstable_cache } from "next/cache";
+import { getMetadata } from "@/lib/config/seo";
 
 interface PageProps {
 	params: {
@@ -15,52 +16,58 @@ interface PageProps {
 	};
 }
 
-// Helper function to get page data
-async function getPageData(slug: string | null): Promise<Page | null> {
-	try {
-		if (!slug) {
-			const settings = await getSettings();
-			if (!settings?.homePage) return null;
+// Cache the page data fetch
+const getCachedPageData = unstable_cache(
+	async (slug: string | null) => {
+		try {
+			if (!slug) {
+				const settings = await getSettings();
+				if (!settings?.homePage) return null;
 
-			// If homePage is a number, use it as the ID
-			const homePageId = typeof settings.homePage === "number" ? settings.homePage : settings.homePage.id;
-			if (!homePageId) return null;
+				// If homePage is a number, use it as the ID
+				const homePageId = typeof settings.homePage === "number" ? settings.homePage : settings.homePage.id;
+				if (!homePageId) return null;
 
-			return await getPageBySlug("/");
+				return await getPageBySlug("/");
+			}
+			return await getPageBySlug(slug);
+		} catch (error) {
+			console.error("Error fetching page data:", error);
+			return null;
 		}
-		return await getPageBySlug(slug);
-	} catch (error) {
-		console.error("Error fetching page data:", error);
-		return null;
+	},
+	["dynamic-page"],
+	{
+		revalidate: 30,
+		tags: ["pages"],
 	}
-}
+);
 
+// Generate metadata for the page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-	const nextjs15 = await params;
-	const slug = nextjs15.slug ? nextjs15.slug.join("/") : null;
-	const page = await getPageData(slug);
+	const slug = params.slug ? params.slug.join("/") : null;
+	const page = await getCachedPageData(slug);
 
 	if (!page) {
 		notFound();
 	}
 
-	const ogImage = page.pageMeta?.image && "url" in page.pageMeta.image ? [{ url: page.pageMeta.image.url }] : [];
-
-	return {
-		title: page.pageMeta?.title || page.title,
+	const title = page.pageMeta?.title || page.title;
+	return getMetadata({
+		title,
 		description: page.pageMeta?.description,
 		openGraph: {
-			title: page.pageMeta?.title || page.title,
+			title,
 			description: page.pageMeta?.description,
-			images: ogImage,
+			images: page.pageMeta?.image ? [{ url: page.pageMeta.image.url }] : undefined,
 		},
-	};
+	});
 }
 
-export default async function Page({ params }: PageProps) {
-	const nextjs15 = await params;
-	const slug = nextjs15.slug ? nextjs15.slug.join("/") : null;
-	const data = await getPageData(slug);
+// Dynamic page component
+export default async function DynamicPage({ params }: PageProps) {
+	const slug = params.slug ? params.slug.join("/") : null;
+	const data = await getCachedPageData(slug);
 
 	if (!data) {
 		notFound();
