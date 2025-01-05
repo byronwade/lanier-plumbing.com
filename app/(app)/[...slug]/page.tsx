@@ -45,7 +45,8 @@ const getCachedPageData = unstable_cache(
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-	const slug = params.slug ? params.slug.join("/") : null;
+	const nextjs15 = await params;
+	const slug = nextjs15.slug ? nextjs15.slug.join("/") : null;
 	const page = await getCachedPageData(slug);
 
 	if (!page) {
@@ -66,7 +67,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 // Dynamic page component
 export default async function DynamicPage({ params }: PageProps) {
-	const slug = params.slug ? params.slug.join("/") : null;
+	const nextjs15 = await params;
+	const slug = nextjs15.slug ? nextjs15.slug.join("/") : null;
 	const data = await getCachedPageData(slug);
 
 	if (!data) {

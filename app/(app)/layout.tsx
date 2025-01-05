@@ -5,7 +5,7 @@ import { getSettings } from "@/lib/actions/getSettings";
 import { unstable_cache } from "next/cache";
 import { Suspense } from "react";
 import { getMetadata } from "@/lib/config/seo";
-import "@/styles/globals.css";
+import "./globals.css";
 import type { Metadata } from "next";
 
 const inter = Inter({
