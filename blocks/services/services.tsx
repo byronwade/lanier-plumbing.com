@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { Home, Building2, ArrowRight, HardHat, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";

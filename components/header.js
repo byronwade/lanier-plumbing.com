@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, Phone, Clock, MapPin, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
@@ -21,6 +22,7 @@ export default function Header({ initialSettings }) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const phoneNumber = initialSettings?.companyPhone || "(770) 536-1161";
 	const address = initialSettings?.companyAddress || "2530 Monroe Dr, Gainesville, GA 30507";
+	const logo = initialSettings?.logo;
 
 	return (
 		<header className="bg-white">
@@ -28,9 +30,9 @@ export default function Header({ initialSettings }) {
 				<div className="flex items-center justify-between h-16 sm:h-18">
 					<div className="flex items-center">
 						<Link prefetch={true} href="/" className="flex items-center space-x-2">
-							<div className="relative w-7 h-7 sm:w-8 sm:h-8">
-								<Phone className="w-full h-full text-red-600" />
-							</div>
+							{logo?.url ?
+								<Image src={logo.url} alt={initialSettings?.companyName || "Lanier Plumbing"} width={logo.width || 200} height={logo.height || 50} className="w-auto h-8 sm:h-10" priority />
+							:	""}
 							<span className="text-base font-bold text-gray-900 sm:text-lg">{initialSettings?.companyName || "Lanier Plumbing"}</span>
 						</Link>
 					</div>

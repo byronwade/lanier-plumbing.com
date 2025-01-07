@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import { FooterCTA } from "@/components/footer-cta";
 
@@ -16,6 +17,7 @@ export default function Footer({ initialSettings }) {
 	const address = initialSettings?.companyAddress || "2530 Monroe Dr, Gainesville, GA 30507";
 	const companyName = initialSettings?.companyName || "Lanier Plumbing";
 	const socialLinks = initialSettings?.socialLinks || [];
+	const logo = initialSettings?.logo;
 
 	useEffect(() => {
 		setYear(new Date().getFullYear());
@@ -28,6 +30,11 @@ export default function Footer({ initialSettings }) {
 				<div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 					<div className="grid grid-cols-1 gap-8 md:grid-cols-3">
 						<div>
+							{logo?.url ?
+								<div className="mb-4">
+									<Image src={logo.url} alt={companyName} width={logo.width || 200} height={logo.height || 50} className="w-auto h-10" />
+								</div>
+							:	""}
 							<h3 className="mb-4 text-lg font-semibold">{companyName}</h3>
 							<p className="text-sm">Your trusted neighborhood plumber serving Gainesville and beyond.</p>
 						</div>
@@ -79,12 +86,12 @@ export default function Footer({ initialSettings }) {
 										twitter: Twitter,
 									}[link.platform.toLowerCase()];
 
-									return Icon ? (
-										<a key={link.platform} href={link.url} className="text-gray-500 transition-colors hover:text-red-600" target="_blank" rel="noopener noreferrer">
-											<Icon size={20} />
-											<span className="sr-only">{link.platform}</span>
-										</a>
-									) : null;
+									return Icon ?
+											<a key={link.platform} href={link.url} className="text-gray-500 transition-colors hover:text-red-600" target="_blank" rel="noopener noreferrer">
+												<Icon size={20} />
+												<span className="sr-only">{link.platform}</span>
+											</a>
+										:	null;
 								})}
 							</div>
 						</div>

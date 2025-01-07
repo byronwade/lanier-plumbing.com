@@ -19,6 +19,7 @@ export const Posts: CollectionConfig = {
 	slug: "posts",
 	admin: {
 		useAsTitle: "title",
+		defaultColumns: ["title", "slug", "createdAt"],
 	},
 	access: {
 		read: () => true,
@@ -29,6 +30,64 @@ export const Posts: CollectionConfig = {
 			type: "text",
 			required: true,
 		},
-		// ... other fields
+		{
+			name: "slug",
+			type: "text",
+			required: true,
+			admin: {
+				position: "sidebar",
+			},
+			hooks: {
+				beforeValidate: [
+					({ value, data }) => {
+						if (!value && data?.title) {
+							return data.title
+								.toLowerCase()
+								.replace(/ /g, "-")
+								.replace(/[^\w-]+/g, "");
+						}
+						return value;
+					},
+				],
+			},
+		},
+		{
+			name: "content",
+			type: "richText",
+			required: true,
+		},
+		{
+			name: "image",
+			type: "upload",
+			relationTo: "media",
+			required: true,
+		},
+		{
+			name: "excerpt",
+			type: "textarea",
+			admin: {
+				description: "A short description of the post. If not provided, it will be generated from the content.",
+			},
+		},
+		{
+			name: "status",
+			type: "select",
+			options: [
+				{
+					label: "Draft",
+					value: "draft",
+				},
+				{
+					label: "Published",
+					value: "published",
+				},
+			],
+			defaultValue: "draft",
+			required: true,
+			admin: {
+				position: "sidebar",
+			},
+		},
 	],
+	timestamps: true,
 };

@@ -33,6 +33,11 @@ const Services = dynamic(() => import("@/blocks/services/services"), {
 	ssr: true,
 }) as ComponentType<any>;
 
+const ServicesList = dynamic(() => import("@/blocks/services-list/services-list"), {
+	loading: () => <BlockSkeleton />,
+	ssr: true,
+}) as ComponentType<any>;
+
 const FAQ = dynamic(() => import("@/blocks/faq/faq"), {
 	loading: () => <BlockSkeleton />,
 	ssr: true,
@@ -87,7 +92,7 @@ const ErrorFallback = memo(function ErrorFallback({ error, componentName }: Erro
 });
 
 // Define all possible block types
-type BlockType = "hero" | "facts" | "costSaving" | "services" | "faq" | "testimonials" | "contact" | "blog" | "about";
+type BlockType = "hero" | "facts" | "costSaving" | "services" | "faq" | "testimonials" | "contact" | "blog" | "about" | "services-list";
 
 // Map of block types to components
 const blockComponents: Record<BlockType, ComponentType<any>> = {
@@ -100,6 +105,7 @@ const blockComponents: Record<BlockType, ComponentType<any>> = {
 	contact: Contact,
 	blog: Blog,
 	about: About,
+	"services-list": ServicesList,
 };
 
 const PageBlocks = memo(function PageBlocks({ layout }: { layout: PageBlock[] }) {

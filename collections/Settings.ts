@@ -10,6 +10,15 @@ export const Settings: GlobalConfig = {
 	},
 	fields: [
 		{
+			name: "logo",
+			type: "upload",
+			relationTo: "media",
+			label: "Company Logo",
+			admin: {
+				description: "Upload your company logo (recommended size: 200x50px)",
+			},
+		},
+		{
 			name: "homePage",
 			type: "relationship",
 			relationTo: "pages",

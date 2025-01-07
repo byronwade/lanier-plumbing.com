@@ -43,14 +43,7 @@ export default function CostSaving(props: CostSavingProps) {
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5">
 				{services.map((service, index) => (
 					<div key={index} className="relative h-64 overflow-hidden rounded-lg">
-						<Image
-							src={service.image.url || "/placeholder.svg"}
-							alt={service.image.alt || service.title}
-							fill
-							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw"
-							className="transition-transform duration-300 hover:scale-110"
-							loading="lazy"
-						/>
+						<Image src={service.image.url || "/placeholder.svg"} alt={service.image.alt || service.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw" className="transition-transform duration-300 hover:scale-110" />
 					</div>
 				))}
 			</div>

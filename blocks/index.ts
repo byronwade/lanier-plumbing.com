@@ -9,18 +9,22 @@ import { testimonialsBlock } from "./testimonials/config";
 import { contactBlock } from "./contact/config";
 import { blogBlock } from "./blog/config";
 import { aboutBlock } from "./about/config";
+import { servicesListBlock } from "./services-list/config";
+import ServicesList from "./services-list/services-list";
 
 // Helper function to add category to block
 const addCategory = (block: Block, group: string): Block => ({
 	...block,
 	admin: {
 		...(block.admin || {}),
-		group,
+		custom: {
+			group,
+		},
 	},
 });
 
 // Add category to each block
-const blocksWithCategories = {
+export const blocks = {
 	hero: addCategory(heroBlock, "Page Sections"),
 	costSaving: addCategory(costSavingBlock, "Page Sections"),
 	facts: addCategory(factsBlock, "Content Blocks"),
@@ -31,13 +35,20 @@ const blocksWithCategories = {
 	contact: addCategory(contactBlock, "Template Blocks"),
 	blog: addCategory(blogBlock, "Template Blocks"),
 	about: addCategory(aboutBlock, "Template Blocks"),
-} satisfies Record<string, Block>;
+	"services-list": {
+		...servicesListBlock,
+		Component: ServicesList,
+	},
+};
 
-// Export blocks array directly for use in collections
-export const blocksArray = Object.values(blocksWithCategories);
-
-// Export blocks object for admin UI
-export const blocks = blocksWithCategories;
+// Export blocks array for use in collections
+export const blocksArray = Object.values(blocks).map((block) => {
+	if ("Component" in block) {
+		const { Component, ...rest } = block;
+		return rest;
+	}
+	return block;
+});
 
 // Export for backwards compatibility
 export default blocksArray;
