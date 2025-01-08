@@ -4,12 +4,12 @@ import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { buildConfig } from "payload";
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import type { Config } from "payload";
-import { Media, Pages, Posts, Services, Settings, Users } from "./collections";
+import { Media, Pages, Posts, Services, Settings, Users, Navigation } from "./collections";
 import { blocks } from "./blocks";
 
 export default buildConfig({
 	editor: lexicalEditor(),
-	collections: [Media, Pages, Posts, Services, Users],
+	collections: [Media, Pages, Posts, Services, Users, Navigation],
 	secret: process.env.PAYLOAD_SECRET || "",
 	db: vercelPostgresAdapter(),
 	typescript: {

@@ -7,22 +7,23 @@ import { Menu, Phone, Clock, MapPin, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 
-export function NavLink({ href, children }) {
+export function NavLink({ href, children, openInNewTab }) {
 	const pathname = usePathname();
 	const isActive = pathname === href;
 
 	return (
-		<Link href={href} prefetch={true} className={`transition-colors ${isActive ? "text-primary" : "hover:text-primary"}`}>
+		<Link href={href} prefetch={true} className={`transition-colors ${isActive ? "text-primary" : "hover:text-primary"}`} {...(openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
 			{children}
 		</Link>
 	);
 }
 
-export default function Header({ initialSettings }) {
+export default function Header({ initialSettings, navigation }) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 	const phoneNumber = initialSettings?.companyPhone || "(770) 536-1161";
 	const address = initialSettings?.companyAddress || "2530 Monroe Dr, Gainesville, GA 30507";
 	const logo = initialSettings?.logo;
+	const navItems = navigation?.items || [];
 
 	return (
 		<header className="bg-white">
@@ -38,11 +39,11 @@ export default function Header({ initialSettings }) {
 					</div>
 
 					<nav className="items-center hidden space-x-4 md:flex lg:space-x-6">
-						<NavLink href="/">Home</NavLink>
-						<NavLink href="/lanier-plumbing-services">Services</NavLink>
-						<NavLink href="/expert-plumbing-tips">Expert Tips</NavLink>
-						<NavLink href="/about-lanier-plumbing">About Us</NavLink>
-						<NavLink href="/contact-lanier-plumbing">Contact Us</NavLink>
+						{navItems.map((item) => (
+							<NavLink key={item.href} href={item.href} openInNewTab={item.openInNewTab}>
+								{item.label}
+							</NavLink>
+						))}
 					</nav>
 
 					<div className="flex items-center space-x-2 md:space-x-0">
@@ -62,11 +63,11 @@ export default function Header({ initialSettings }) {
 			{isMenuOpen && (
 				<div className="bg-white border-t border-gray-200 md:hidden">
 					<div className="px-2 pt-2 pb-3 space-y-1">
-						<NavLink href="/">Home</NavLink>
-						<NavLink href="/services">Services</NavLink>
-						<NavLink href="/expert-tips">Expert Tips</NavLink>
-						<NavLink href="/about">About Us</NavLink>
-						<NavLink href="/contact">Contact Us</NavLink>
+						{navItems.map((item) => (
+							<NavLink key={item.href} href={item.href} openInNewTab={item.openInNewTab}>
+								{item.label}
+							</NavLink>
+						))}
 					</div>
 				</div>
 			)}

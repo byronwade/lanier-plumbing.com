@@ -3,7 +3,7 @@
 import { getPayloadClient } from "../payload";
 import { unstable_cache } from "next/cache";
 
-interface Service {
+export interface Service {
 	id: string;
 	title: string;
 	slug: string;

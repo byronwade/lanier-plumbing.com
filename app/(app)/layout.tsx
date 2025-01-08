@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { getSettings } from "@/lib/actions/getSettings";
+import { getNavigation } from "@/lib/actions/getNavigation";
 import { unstable_cache } from "next/cache";
 import { Suspense } from "react";
 import { getMetadata } from "@/lib/config/seo";
@@ -50,12 +51,31 @@ const getCachedSettings = unstable_cache(
 	}
 );
 
+// Cache the navigation fetch
+const getCachedNavigation = unstable_cache(
+	async (location: "header" | "footer") => {
+		try {
+			const nav = await getNavigation(location);
+			console.log(`Fetched ${location} navigation:`, nav?.name || "Not found");
+			return nav;
+		} catch (error) {
+			console.error(`Failed to load ${location} navigation:`, error);
+			return null;
+		}
+	},
+	["root-layout-navigation"],
+	{
+		revalidate: 30,
+		tags: ["navigation"],
+	}
+);
+
 interface RootLayoutProps {
 	children: React.ReactNode;
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-	const settings = await getCachedSettings();
+	const [settings, headerNav, footerNav] = await Promise.all([getCachedSettings(), getCachedNavigation("header").catch(() => null), getCachedNavigation("footer").catch(() => null)]);
 
 	return (
 		<html lang="en" suppressHydrationWarning>
@@ -71,7 +91,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 			<body className={inter.className}>
 				<div className="flex flex-col min-h-screen">
 					<Suspense fallback={<div className="h-16 animate-pulse bg-background" />}>
-						<Header initialSettings={settings} />
+						<Header initialSettings={settings} navigation={headerNav} />
 					</Suspense>
 
 					<main className="flex-grow">
@@ -79,7 +99,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 					</main>
 
 					<Suspense fallback={<div className="h-16 animate-pulse bg-background" />}>
-						<Footer initialSettings={settings} />
+						<Footer initialSettings={settings} navigation={footerNav} />
 					</Suspense>
 				</div>
 			</body>

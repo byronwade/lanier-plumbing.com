@@ -2,7 +2,8 @@ import { getSettings } from "@/lib/actions/getSettings";
 import { getAllPages } from "@/lib/actions/getPages";
 import { getServices } from "@/lib/actions/getServices";
 import { MetadataRoute } from "next";
-import type { Page, Service } from "@/payload-types";
+import type { Page } from "@/payload-types";
+import type { Service } from "@/lib/actions/getServices";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const settings = await getSettings();
@@ -18,13 +19,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	}));
 
 	// Get all services
-	const services = await getServices();
-	const serviceUrls = (services as Service[]).map((service) => ({
-		url: `${baseUrl}/lanier-plumbing-services/${service.slug}`,
-		lastModified: new Date(service.updatedAt),
-		changeFrequency: "weekly" as const,
-		priority: 0.9,
-	}));
+	const { docs: services } = await getServices();
+	const serviceUrls = services
+		.filter((service) => service.status === "published")
+		.map((service) => ({
+			url: `${baseUrl}/lanier-plumbing-services/${service.slug}`,
+			lastModified: new Date(service.updatedAt),
+			changeFrequency: "weekly" as const,
+			priority: 0.9,
+		}));
 
 	// Static routes
 	const staticRoutes = [

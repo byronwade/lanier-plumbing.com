@@ -10,7 +10,7 @@ export function getCurrentYear() {
 	return new Date().getFullYear();
 }
 
-export default function Footer({ initialSettings }) {
+export default function Footer({ initialSettings, navigation }) {
 	const [year, setYear] = useState(2024);
 	const phoneNumber = initialSettings?.companyPhone || "(770) 536-1161";
 	const email = initialSettings?.companyEmail || "info@lanierplumbing.com";
@@ -18,6 +18,7 @@ export default function Footer({ initialSettings }) {
 	const companyName = initialSettings?.companyName || "Lanier Plumbing";
 	const socialLinks = initialSettings?.socialLinks || [];
 	const logo = initialSettings?.logo;
+	const navItems = navigation?.items || [];
 
 	useEffect(() => {
 		setYear(new Date().getFullYear());
@@ -41,26 +42,13 @@ export default function Footer({ initialSettings }) {
 						<div>
 							<h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
 							<ul className="space-y-2">
-								<li>
-									<Link prefetch={true} href="/" className="text-sm transition-colors hover:text-red-600">
-										Home
-									</Link>
-								</li>
-								<li>
-									<Link prefetch={true} href="/lanier-plumbing-services" className="text-sm transition-colors hover:text-red-600">
-										Services
-									</Link>
-								</li>
-								<li>
-									<Link prefetch={true} href="/expert-plumbing-tips" className="text-sm transition-colors hover:text-red-600">
-										Expert Tips
-									</Link>
-								</li>
-								<li>
-									<Link prefetch={true} href="/about-lanier-plumbing" className="text-sm transition-colors hover:text-red-600">
-										About Us
-									</Link>
-								</li>
+								{navItems.map((item) => (
+									<li key={item.href}>
+										<Link href={item.href} prefetch={true} className="text-sm transition-colors hover:text-red-600" {...(item.openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+											{item.label}
+										</Link>
+									</li>
+								))}
 							</ul>
 						</div>
 						<div>
