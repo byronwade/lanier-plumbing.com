@@ -20,8 +20,10 @@ export function NavLink({ href, children, openInNewTab }) {
 
 export default function Header({ initialSettings, navigation }) {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-	const phoneNumber = initialSettings?.companyPhone || "(770) 536-1161";
-	const address = initialSettings?.companyAddress || "2530 Monroe Dr, Gainesville, GA 30507";
+	const phoneNumber = initialSettings?.phone || "(770) 536-1161";
+	const address = initialSettings?.address ? `${initialSettings.address.street}, ${initialSettings.address.city}, ${initialSettings.address.state} ${initialSettings.address.zip}` : "2530 Monroe Dr, Gainesville, GA 30507";
+	const companyName = initialSettings?.companyName || "Lanier Plumbing";
+	const serviceArea = initialSettings?.serviceArea || "Gainesville";
 	const logo = initialSettings?.logo;
 	const navItems = navigation?.items || [];
 
@@ -31,10 +33,8 @@ export default function Header({ initialSettings, navigation }) {
 				<div className="flex items-center justify-between h-16 sm:h-18">
 					<div className="flex items-center">
 						<Link prefetch={true} href="/" className="flex items-center space-x-2">
-							{logo?.url ?
-								<Image src={logo.url} alt={initialSettings?.companyName || "Lanier Plumbing"} width={logo.width || 200} height={logo.height || 50} className="w-auto h-8 sm:h-10" priority />
-							:	""}
-							<span className="text-base font-bold text-gray-900 sm:text-lg">{initialSettings?.companyName || "Lanier Plumbing"}</span>
+							{logo?.url && <Image src={logo.url} alt={companyName} width={logo.width || 200} height={logo.height || 50} className="w-auto h-8 sm:h-10" priority />}
+							<span className="text-base font-bold text-gray-900 sm:text-lg">{companyName}</span>
 						</Link>
 					</div>
 
@@ -47,12 +47,12 @@ export default function Header({ initialSettings, navigation }) {
 					</nav>
 
 					<div className="flex items-center space-x-2 md:space-x-0">
-						<a href={`tel:${phoneNumber.replace(/\D/g, "")}`} className="bg-red-600 text-white hover:bg-red-700 text-sm px-3 py-1.5 rounded transition-colors flex items-center">
+						<a href={`tel:${phoneNumber.replace(/\D/g, "")}`} className="bg-red-600 text-white hover:bg-red-700 text-sm px-3 py-1.5 rounded transition-colors flex items-center" aria-label="Call us">
 							<Phone className="w-4 h-4 mr-2" />
 							<span className="font-semibold md:hidden">Call</span>
 							<span className="hidden font-semibold md:inline">{phoneNumber}</span>
 						</a>
-						<Button variant="ghost" size="sm" className="text-gray-700 md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+						<Button variant="ghost" size="sm" className="text-gray-700 md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu" aria-expanded={isMenuOpen}>
 							<Menu className="w-5 h-5" />
 							<span className="sr-only">Toggle menu</span>
 						</Button>
@@ -62,13 +62,15 @@ export default function Header({ initialSettings, navigation }) {
 
 			{isMenuOpen && (
 				<div className="bg-white border-t border-gray-200 md:hidden">
-					<div className="px-2 pt-2 pb-3 space-y-1">
+					<nav className="px-2 pt-2 pb-3 space-y-1">
 						{navItems.map((item) => (
-							<NavLink key={item.href} href={item.href} openInNewTab={item.openInNewTab}>
-								{item.label}
-							</NavLink>
+							<div key={item.href} className="block px-3 py-2">
+								<NavLink href={item.href} openInNewTab={item.openInNewTab}>
+									{item.label}
+								</NavLink>
+							</div>
 						))}
-					</div>
+					</nav>
 				</div>
 			)}
 
@@ -87,7 +89,7 @@ export default function Header({ initialSettings, navigation }) {
 						</div>
 						<div className="flex items-center">
 							<Award className="w-4 h-4 mr-2 text-red-600" />
-							<span>Your Trusted Neighborhood Plumber</span>
+							<span>Your Trusted {serviceArea} Plumber</span>
 						</div>
 					</div>
 				</div>

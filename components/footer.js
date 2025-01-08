@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Facebook, Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
 import { FooterCTA } from "@/components/footer-cta";
 
 export function getCurrentYear() {
@@ -11,18 +11,26 @@ export function getCurrentYear() {
 }
 
 export default function Footer({ initialSettings, navigation }) {
-	const [year, setYear] = useState(2024);
-	const phoneNumber = initialSettings?.companyPhone || "(770) 536-1161";
-	const email = initialSettings?.companyEmail || "info@lanierplumbing.com";
-	const address = initialSettings?.companyAddress || "2530 Monroe Dr, Gainesville, GA 30507";
+	const [year, setYear] = useState(getCurrentYear());
+	const phoneNumber = initialSettings?.phone || "(770) 536-1161";
+	const email = initialSettings?.email || "info@lanierplumbing.com";
+	const address = initialSettings?.address ? `${initialSettings.address.street}, ${initialSettings.address.city}, ${initialSettings.address.state} ${initialSettings.address.zip}` : "2530 Monroe Dr, Gainesville, GA 30507";
 	const companyName = initialSettings?.companyName || "Lanier Plumbing";
-	const socialLinks = initialSettings?.socialLinks || [];
+	const socialMedia = initialSettings?.socialMedia || {};
 	const logo = initialSettings?.logo;
 	const navItems = navigation?.items || [];
 
 	useEffect(() => {
-		setYear(new Date().getFullYear());
+		setYear(getCurrentYear());
 	}, []);
+
+	const socialIcons = {
+		facebook: Facebook,
+		instagram: Instagram,
+		twitter: Twitter,
+		linkedin: Linkedin,
+		youtube: Youtube,
+	};
 
 	return (
 		<>
@@ -31,13 +39,13 @@ export default function Footer({ initialSettings, navigation }) {
 				<div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 					<div className="grid grid-cols-1 gap-8 md:grid-cols-3">
 						<div>
-							{logo?.url ?
+							{logo?.url && (
 								<div className="mb-4">
 									<Image src={logo.url} alt={companyName} width={logo.width || 200} height={logo.height || 50} className="w-auto h-10" />
 								</div>
-							:	""}
+							)}
 							<h3 className="mb-4 text-lg font-semibold">{companyName}</h3>
-							<p className="text-sm">Your trusted neighborhood plumber serving Gainesville and beyond.</p>
+							<p className="text-sm">Your trusted neighborhood plumber serving {initialSettings?.serviceArea || "Gainesville"} and beyond.</p>
 						</div>
 						<div>
 							<h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
@@ -67,19 +75,17 @@ export default function Footer({ initialSettings, navigation }) {
 								</a>
 							</p>
 							<div className="flex space-x-4">
-								{socialLinks.map((link) => {
-									const Icon = {
-										facebook: Facebook,
-										instagram: Instagram,
-										twitter: Twitter,
-									}[link.platform.toLowerCase()];
+								{Object.entries(socialMedia).map(([platform, url]) => {
+									if (!url) return null;
+									const Icon = socialIcons[platform.toLowerCase()];
+									if (!Icon) return null;
 
-									return Icon ?
-											<a key={link.platform} href={link.url} className="text-gray-500 transition-colors hover:text-red-600" target="_blank" rel="noopener noreferrer">
-												<Icon size={20} />
-												<span className="sr-only">{link.platform}</span>
-											</a>
-										:	null;
+									return (
+										<a key={platform} href={url} className="text-gray-500 transition-colors hover:text-red-600" target="_blank" rel="noopener noreferrer" aria-label={`Visit our ${platform} page`}>
+											<Icon size={20} />
+											<span className="sr-only">Visit our {platform} page</span>
+										</a>
+									);
 								})}
 							</div>
 						</div>

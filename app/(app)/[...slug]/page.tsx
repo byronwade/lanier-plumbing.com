@@ -97,6 +97,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 			openGraph: {
 				title: post.data.title,
 				description: post.data.description,
+				type: "article",
+				publishedTime: post.data.createdAt,
+				authors: ["Lanier Plumbing Expert"],
+				images: post.data.image ? [{ url: post.data.image.url, alt: post.data.image.alt }] : undefined,
+			},
+			twitter: {
+				card: "summary_large_image",
+				title: post.data.title,
+				description: post.data.description,
+				images: post.data.image ? [post.data.image.url] : undefined,
+			},
+			alternates: {
+				canonical: `https://lanier-plumbing.com/expert-plumbing-tips/${postSlug}`,
+			},
+			other: {
+				"article:published_time": post.data.createdAt,
+				"article:modified_time": post.data.createdAt,
+				"og:article:published_time": post.data.createdAt,
+				"og:article:modified_time": post.data.createdAt,
 			},
 		});
 	}
@@ -115,7 +134,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 			openGraph: {
 				title: service.data.title,
 				description: service.data.description,
-				images: service.data.image ? [{ url: service.data.image.url }] : undefined,
+				type: "website",
+				images: service.data.image ? [{ url: service.data.image.url, alt: service.data.image.alt }] : undefined,
+			},
+			twitter: {
+				card: "summary_large_image",
+				title: service.data.title,
+				description: service.data.description,
+				images: service.data.image ? [service.data.image.url] : undefined,
+			},
+			alternates: {
+				canonical: `https://lanier-plumbing.com/lanier-plumbing-services/${serviceSlug}`,
+			},
+			other: {
+				"og:updated_time": service.data.updatedAt,
 			},
 		});
 	}
@@ -128,13 +160,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 	}
 
 	const title = page.pageMeta?.title || page.title;
+	const description = page.pageMeta?.description || `Learn about our ${title.toLowerCase()} services and solutions.`;
+	const canonicalUrl = `https://lanier-plumbing.com/${slug}`;
+
 	return getMetadata({
 		title,
-		description: page.pageMeta?.description,
+		description,
 		openGraph: {
 			title,
-			description: page.pageMeta?.description,
-			images: page.pageMeta?.image ? [{ url: page.pageMeta.image.url }] : undefined,
+			description,
+			type: "website",
+			images: page.pageMeta?.image ? [{ url: page.pageMeta.image.url, alt: title }] : undefined,
+		},
+		twitter: {
+			card: "summary_large_image",
+			title,
+			description,
+			images: page.pageMeta?.image ? [page.pageMeta.image.url] : undefined,
+		},
+		alternates: {
+			canonical: canonicalUrl,
 		},
 	});
 }

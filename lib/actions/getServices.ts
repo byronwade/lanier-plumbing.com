@@ -2,6 +2,7 @@
 
 import { getPayloadClient } from "../payload";
 import { unstable_cache } from "next/cache";
+import { getSettings } from "./getSettings";
 
 export interface Service {
 	id: string;
@@ -184,6 +185,7 @@ export async function getServiceBySlug(slug: string) {
 	try {
 		console.log("getServiceBySlug - Starting fetch for slug:", slug);
 		const service = await getCachedServiceBySlug(slug);
+		const settings = await getSettings();
 
 		if (!service) {
 			console.log("getServiceBySlug - No service found for slug:", slug);
@@ -197,11 +199,66 @@ export async function getServiceBySlug(slug: string) {
 			hasContent: !!service.content,
 		});
 
+		const baseUrl = settings?.siteURL || "https://lanier-plumbing.com";
+
+		// Ensure media URLs are properly formatted
+		const formatMediaUrl = (url?: string) => {
+			if (!url) return undefined;
+			if (url.startsWith("http")) return url;
+
+			// Use the server URL from environment variables
+			const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === "development" ? "http://localhost:3000" : baseUrl);
+
+			// Remove any potential double slashes except for protocol
+			const cleanUrl = `${serverUrl}${url}`.replace(/([^:]\/)\/+/g, "$1");
+
+			return cleanUrl;
+		};
+
+		const formattedImage =
+			service.image ?
+				{
+					...service.image,
+					url: formatMediaUrl(service.image.url),
+				}
+			:	undefined;
+
+		const companyName = settings?.companyName || "Lanier Plumbing";
+		const logoUrl = formatMediaUrl(settings?.logo?.url);
+
 		return {
 			data: {
 				title: service.title,
 				description: service.excerpt,
-				image: service.image,
+				image: formattedImage,
+				updatedAt: service.updatedAt,
+				createdAt: service.createdAt,
+				structuredData: {
+					"@context": "https://schema.org",
+					"@type": "Service",
+					name: service.title,
+					description: service.excerpt,
+					provider: {
+						"@type": "LocalBusiness",
+						name: companyName,
+						image: logoUrl || formattedImage?.url,
+						address: {
+							"@type": "PostalAddress",
+							streetAddress: settings?.address?.street,
+							addressLocality: settings?.address?.city || "Georgia",
+							addressRegion: settings?.address?.state || "GA",
+							postalCode: settings?.address?.zip,
+							addressCountry: settings?.address?.country || "US",
+						},
+						priceRange: settings?.priceRange || "$$",
+						telephone: settings?.phone || "",
+					},
+					areaServed: {
+						"@type": "State",
+						name: settings?.serviceArea || "Georgia",
+					},
+					serviceType: "Plumbing",
+				},
 			},
 			content: service.content,
 		};

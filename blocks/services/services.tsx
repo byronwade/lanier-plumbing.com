@@ -20,19 +20,26 @@ interface ServiceSection {
 		width?: number;
 		height?: number;
 	};
-	phoneNumber: string;
+	phoneNumber?: string;
 	primaryButton: {
 		text: string;
-		link: `/${string}` | `tel:${string}` | `mailto:${string}`;
+		link: string;
 	};
 	secondaryButton: {
 		text: string;
-		link: `/${string}` | `tel:${string}` | `mailto:${string}`;
+		link: string;
 	};
+}
+
+interface Settings {
+	phone?: string;
+	companyName?: string;
+	serviceArea?: string;
 }
 
 interface ServicesBlock extends BaseBlock {
 	sections: ServiceSection[];
+	settings?: Settings;
 }
 
 const iconMap = {
@@ -42,19 +49,20 @@ const iconMap = {
 };
 
 export default function Services(props: ServicesBlock) {
-	const { sections = [] } = props;
+	const { sections = [], settings } = props;
 
 	return (
 		<div className="flex flex-col w-full">
 			{sections.map((section, index) => (
-				<ServiceSection key={index} {...section} />
+				<ServiceSection key={index} {...section} settings={settings} />
 			))}
 		</div>
 	);
 }
 
-function ServiceSection(props: ServiceSection) {
-	const { type, title, description, features, image, phoneNumber, primaryButton, secondaryButton } = props;
+function ServiceSection(props: ServiceSection & { settings?: Settings }) {
+	const { type, title, description, features, image, phoneNumber, primaryButton, secondaryButton, settings } = props;
+	const phone = phoneNumber || settings?.phone || "(770) 536-1161";
 
 	const Icon = iconMap[type];
 
@@ -77,10 +85,10 @@ function ServiceSection(props: ServiceSection) {
 							))}
 						</ul>
 						<div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
-							<Link prefetch={true} href={`tel:${phoneNumber.replace(/\D/g, "")}`}>
+							<Link prefetch={true} href={`tel:${phone.replace(/\D/g, "")}`}>
 								<Button size="lg" className="bg-red-600 hover:bg-red-800">
 									<Phone className="w-4 h-4 mr-2" aria-hidden="true" />
-									<span className="min-w-[7rem]">{phoneNumber}</span>
+									<span className="min-w-[7rem]">{phone}</span>
 								</Button>
 							</Link>
 							<Link prefetch={true} href={secondaryButton.link}>

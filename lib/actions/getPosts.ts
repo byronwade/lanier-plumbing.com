@@ -2,6 +2,7 @@
 
 import { getPayloadClient } from "../payload";
 import { unstable_cache } from "next/cache";
+import { getSettings } from "./getSettings";
 
 interface Post {
 	id: string;
@@ -16,6 +17,7 @@ interface Post {
 		  };
 	excerpt?: string;
 	createdAt: string;
+	updatedAt: string;
 	image?: {
 		id: string;
 		url: string;
@@ -116,6 +118,7 @@ export async function getPostBySlug(slug: string) {
 	try {
 		console.log("Getting post by slug:", slug);
 		const post = await getCachedPostBySlug(slug);
+		const settings = await getSettings();
 
 		if (!post) {
 			console.log("No post found for slug:", slug);
@@ -124,13 +127,67 @@ export async function getPostBySlug(slug: string) {
 
 		console.log("Post found:", post.title);
 
+		const baseUrl = settings?.siteURL || "https://lanier-plumbing.com";
+
+		// Ensure media URLs are properly formatted
+		const formatMediaUrl = (url?: string) => {
+			if (!url) return undefined;
+			if (url.startsWith("http")) return url;
+
+			// Use the server URL from environment variables
+			const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === "development" ? "http://localhost:3000" : baseUrl);
+
+			// Remove any potential double slashes except for protocol
+			const cleanUrl = `${serverUrl}${url}`.replace(/([^:]\/)\/+/g, "$1");
+
+			return cleanUrl;
+		};
+
+		const formattedImage =
+			post.image ?
+				{
+					...post.image,
+					url: formatMediaUrl(post.image.url),
+				}
+			:	undefined;
+
+		const companyName = settings?.companyName || "Lanier Plumbing";
+		const logoUrl = formatMediaUrl(settings?.logo?.url);
+
 		return {
 			data: {
 				title: post.title,
-				description: post.excerpt || "Read our latest plumbing tips and advice",
+				description: post.excerpt || settings?.blogSettings?.defaultExcerpt || "Read our latest plumbing tips and advice",
 				createdAt: post.createdAt,
-				author: "Lanier Plumbing Expert",
-				image: post.image,
+				author: settings?.blogSettings?.defaultAuthor || "Plumbing Expert",
+				image: formattedImage,
+				structuredData: {
+					"@context": "https://schema.org",
+					"@type": "BlogPosting",
+					headline: post.title,
+					description: post.excerpt || settings?.blogSettings?.defaultExcerpt,
+					image: formattedImage?.url || logoUrl,
+					author: {
+						"@type": "Organization",
+						name: companyName,
+						url: baseUrl,
+						logo: logoUrl,
+					},
+					publisher: {
+						"@type": "Organization",
+						name: companyName,
+						logo: {
+							"@type": "ImageObject",
+							url: logoUrl || `${baseUrl}/logo.png`,
+						},
+					},
+					datePublished: post.createdAt,
+					dateModified: post.updatedAt || post.createdAt,
+					mainEntityOfPage: {
+						"@type": "WebPage",
+						"@id": `${baseUrl}/expert-plumbing-tips/${post.slug}`,
+					},
+				},
 			},
 			content: post.content,
 		};

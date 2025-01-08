@@ -2,78 +2,164 @@ import { GlobalConfig } from "payload";
 
 export const Settings: GlobalConfig = {
 	slug: "settings",
-	admin: {
-		group: "Site Settings",
-	},
 	access: {
 		read: () => true,
 	},
 	fields: [
 		{
-			name: "logo",
-			type: "upload",
-			relationTo: "media",
-			label: "Company Logo",
-			admin: {
-				description: "Upload your company logo (recommended size: 200x50px)",
-			},
+			name: "companyName",
+			type: "text",
+			required: true,
+		},
+		{
+			name: "siteURL",
+			type: "text",
+			required: true,
 		},
 		{
 			name: "homePage",
 			type: "relationship",
 			relationTo: "pages",
-			required: true,
-			admin: {
-				description: "Select which page should be displayed as the home page",
-			},
 		},
 		{
-			name: "companyName",
-			type: "text",
-			required: true,
-			defaultValue: "Lanier Plumbing",
+			name: "logo",
+			type: "upload",
+			relationTo: "media",
 		},
 		{
-			name: "companyPhone",
-			type: "text",
-			required: true,
-			defaultValue: "(770) 536-1161",
-		},
-		{
-			name: "companyEmail",
-			type: "email",
-			required: true,
-			defaultValue: "info@lanierplumbing.com",
-		},
-		{
-			name: "companyAddress",
-			type: "text",
-			required: true,
-			defaultValue: "2530 Monroe Dr, Gainesville, GA 30507",
-		},
-		{
-			name: "socialLinks",
-			type: "array",
-			defaultValue: [
-				{
-					platform: "facebook",
-					url: "https://facebook.com/lanierplumbing",
-				},
-				{
-					platform: "instagram",
-					url: "https://instagram.com/lanierplumbing",
-				},
-			],
+			name: "address",
+			type: "group",
 			fields: [
 				{
-					name: "platform",
+					name: "street",
 					type: "text",
-					required: true,
 				},
 				{
-					name: "url",
+					name: "city",
 					type: "text",
-					required: true,
+				},
+				{
+					name: "state",
+					type: "text",
+				},
+				{
+					name: "zip",
+					type: "text",
+				},
+				{
+					name: "country",
+					type: "text",
+				},
+			],
+		},
+		{
+			name: "phone",
+			type: "text",
+		},
+		{
+			name: "email",
+			type: "email",
+		},
+		{
+			name: "priceRange",
+			type: "select",
+			options: ["$", "$$", "$$$", "$$$$"],
+		},
+		{
+			name: "serviceArea",
+			type: "text",
+		},
+		{
+			name: "blogSettings",
+			type: "group",
+			fields: [
+				{
+					name: "defaultAuthor",
+					type: "text",
+				},
+				{
+					name: "defaultExcerpt",
+					type: "textarea",
+				},
+				{
+					name: "authorBio",
+					type: "richText",
+				},
+			],
+		},
+		{
+			name: "socialMedia",
+			type: "group",
+			fields: [
+				{
+					name: "twitter",
+					type: "text",
+				},
+				{
+					name: "facebook",
+					type: "text",
+				},
+				{
+					name: "instagram",
+					type: "text",
+				},
+				{
+					name: "linkedin",
+					type: "text",
+				},
+				{
+					name: "youtube",
+					type: "text",
+				},
+			],
+		},
+		{
+			name: "defaultSEO",
+			type: "group",
+			fields: [
+				{
+					name: "title",
+					type: "text",
+				},
+				{
+					name: "description",
+					type: "textarea",
+				},
+				{
+					name: "keywords",
+					type: "text",
+					hasMany: true,
+					label: "Keywords",
+					admin: {
+						description: "Enter SEO keywords (one per line)",
+					},
+				},
+				{
+					name: "image",
+					type: "upload",
+					relationTo: "media",
+				},
+			],
+		},
+		{
+			name: "siteVerification",
+			type: "group",
+			fields: [
+				{
+					name: "google",
+					type: "text",
+				},
+				{
+					name: "bing",
+					type: "text",
+				},
+				{
+					name: "yandex",
+					type: "text",
+				},
+				{
+					name: "yahoo",
+					type: "text",
 				},
 			],
 		},

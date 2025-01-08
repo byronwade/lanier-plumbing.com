@@ -25,16 +25,6 @@ export function FooterCTA() {
 
 	return (
 		<section className="relative py-12 overflow-hidden bg-red-100 border-red-200 shadow-sm border-y">
-			<div
-				ref={parallaxRef}
-				className="absolute inset-0 z-0"
-				style={{
-					backgroundImage: "url('/placeholder.svg')",
-					backgroundSize: "200px",
-					backgroundRepeat: "repeat",
-					opacity: 0.1,
-				}}
-			/>
 			<div className="relative z-10 flex flex-col items-center justify-between w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 md:flex-row">
 				<div className="w-full mb-6 text-center md:text-left md:w-auto">
 					<h2 className="mb-2 text-2xl font-bold text-red-800">Lanier Plumbing Services</h2>

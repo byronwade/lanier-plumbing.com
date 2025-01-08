@@ -31,27 +31,48 @@ export interface Service {
 
 export interface Setting {
 	id: string;
-	homePage?:
-		| {
-				id: string | number;
-				value?: any;
-		  }
-		| number;
-	siteURL?: string;
-	companyName?: string;
-	defaultSEO?: {
-		title?: string;
-		description?: string;
-		keywords?: string[];
-		image?: {
-			url: string;
-		};
+	companyName: string;
+	siteURL: string;
+	homePage?: { id: string } | string | number;
+	logo?: {
+		id: string;
+		url: string;
+		alt: string;
+		filename: string;
+	};
+	address?: {
+		street: string;
+		city: string;
+		state: string;
+		zip: string;
+		country: string;
+	};
+	phone?: string;
+	email?: string;
+	priceRange?: string;
+	serviceArea?: string;
+	blogSettings?: {
+		defaultAuthor: string;
+		defaultExcerpt: string;
+		authorBio?: string;
 	};
 	socialMedia?: {
 		twitter?: string;
 		facebook?: string;
 		instagram?: string;
 		linkedin?: string;
+		youtube?: string;
+	};
+	defaultSEO?: {
+		title?: string;
+		description?: string;
+		keywords?: string[];
+		image?: {
+			id: string;
+			url: string;
+			alt: string;
+			filename: string;
+		};
 	};
 	siteVerification?: {
 		google?: string;

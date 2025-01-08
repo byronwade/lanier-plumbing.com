@@ -8,26 +8,44 @@ const getBaseMetadata = unstable_cache(
 		const settings = await getSettings();
 		const baseUrl = settings?.siteURL || "https://lanier-plumbing.com";
 		const companyName = settings?.companyName || "Lanier Plumbing";
+		const defaultTitle = settings?.defaultSEO?.title || "Lanier Plumbing | Expert Plumbing Services in Georgia";
+		const defaultDescription = settings?.defaultSEO?.description || "Professional plumbing services in Georgia. Available 24/7 for emergencies.";
 
 		const metadata: Metadata = {
 			metadataBase: new URL(baseUrl),
 			applicationName: companyName,
 			title: {
 				template: `%s | ${companyName}`,
-				default: settings?.defaultSEO?.title || "Lanier Plumbing | Expert Plumbing Services in Georgia",
+				default: defaultTitle,
+				absolute: defaultTitle,
 			},
-			description: settings?.defaultSEO?.description || "Professional plumbing services in Georgia. Available 24/7 for emergencies.",
-			keywords: settings?.defaultSEO?.keywords || ["plumbing services", "emergency plumber", "Georgia plumber", "24/7 plumbing", "residential plumbing", "commercial plumbing", "licensed plumber", "plumbing repair", "water heater installation", "drain cleaning"],
+			description: defaultDescription,
+			keywords: settings?.defaultSEO?.keywords || ["plumbing services", "emergency plumber", "Georgia plumber", "24/7 plumbing", "residential plumbing", "commercial plumbing", "licensed plumber", "plumbing repair", "water heater installation", "drain cleaning", "plumbing maintenance", "pipe repair", "leak detection", "sewer repair", "bathroom plumbing", "kitchen plumbing"],
 			authors: [{ name: companyName, url: baseUrl }],
 			creator: companyName,
 			publisher: companyName,
+			formatDetection: {
+				telephone: true,
+				date: true,
+				address: true,
+				email: true,
+				url: true,
+			},
 			referrer: "origin-when-cross-origin",
+			colorScheme: "light dark",
+			viewport: {
+				width: "device-width",
+				initialScale: 1,
+				maximumScale: 5,
+			},
 			robots: {
 				index: true,
 				follow: true,
+				nocache: false,
 				googleBot: {
 					index: true,
 					follow: true,
+					noimageindex: false,
 					"max-video-preview": -1,
 					"max-image-preview": "large",
 					"max-snippet": -1,
@@ -38,8 +56,8 @@ const getBaseMetadata = unstable_cache(
 				locale: "en_US",
 				url: baseUrl,
 				siteName: companyName,
-				title: settings?.defaultSEO?.title || "Lanier Plumbing | Expert Plumbing Services in Georgia",
-				description: settings?.defaultSEO?.description,
+				title: defaultTitle,
+				description: defaultDescription,
 				images:
 					settings?.defaultSEO?.image ?
 						[
@@ -47,7 +65,8 @@ const getBaseMetadata = unstable_cache(
 								url: settings.defaultSEO.image.url,
 								width: 1200,
 								height: 630,
-								alt: companyName,
+								alt: defaultTitle,
+								type: "image/jpeg",
 							},
 						]
 					:	undefined,
@@ -56,6 +75,8 @@ const getBaseMetadata = unstable_cache(
 				card: "summary_large_image",
 				site: settings?.socialMedia?.twitter || "@lanierplumbing",
 				creator: settings?.socialMedia?.twitter || "@lanierplumbing",
+				title: defaultTitle,
+				description: defaultDescription,
 				images: settings?.defaultSEO?.image ? [settings.defaultSEO.image.url] : undefined,
 			},
 			verification: {
@@ -78,21 +99,22 @@ const getBaseMetadata = unstable_cache(
 				other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#00446a" }],
 			},
 			manifest: "/site.webmanifest",
-			formatDetection: {
-				telephone: true,
-				date: true,
-				address: true,
-				email: true,
-				url: true,
-			},
 			category: "Business & Services",
+			classification: "Plumbing Services",
+			other: {
+				"msapplication-TileColor": "#00446a",
+				"theme-color": "#ffffff",
+				"apple-mobile-web-app-capable": "yes",
+				"apple-mobile-web-app-status-bar-style": "default",
+				"apple-mobile-web-app-title": companyName,
+			},
 		};
 
 		return metadata;
 	},
 	["base-metadata"],
 	{
-		revalidate: 3600, // Revalidate every hour
+		revalidate: 3600,
 		tags: ["settings", "seo"],
 	}
 );

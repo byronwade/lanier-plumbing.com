@@ -7,6 +7,11 @@ import type { Page } from "@/payload-types";
 type LayoutType = NonNullable<Page["layout"]>;
 type BaseBlock = Extract<LayoutType[number], { blockType: string }>;
 
+interface Settings {
+	companyName?: string;
+	serviceArea?: string;
+}
+
 interface AboutBlock extends Omit<BaseBlock, "blockType"> {
 	blockType: "about";
 	hero: {
@@ -39,6 +44,7 @@ interface AboutBlock extends Omit<BaseBlock, "blockType"> {
 		};
 		description: string;
 	};
+	settings?: Settings;
 }
 
 const IconMap = {
@@ -48,7 +54,9 @@ const IconMap = {
 } as const;
 
 export default function About(props: AboutBlock) {
-	const { hero, mission, features, services } = props;
+	const { hero, mission, features, services, settings } = props;
+	const companyName = settings?.companyName || "Lanier Plumbing";
+	const serviceArea = settings?.serviceArea || "Gainesville";
 
 	return (
 		<section className="pt-12 pb-32 bg-white">
@@ -61,7 +69,7 @@ export default function About(props: AboutBlock) {
 
 				{/* Mission Section */}
 				<div className="grid gap-6 md:grid-cols-2">
-					<Image src={mission.image.url} alt={mission.image.alt || "Lanier Plumbing team at work"} className="object-cover w-full h-96 rounded-2xl" width={576} height={384} />
+					<Image src={mission.image.url} alt={mission.image.alt || `${companyName} team at work`} className="object-cover w-full h-96 rounded-2xl" width={576} height={384} />
 					<div className="flex flex-col justify-between gap-10 p-10 bg-gray-100 rounded-2xl">
 						<p className="text-sm text-gray-500">{mission.label}</p>
 						<p className="text-lg font-medium text-gray-900">{mission.statement}</p>
@@ -97,7 +105,7 @@ export default function About(props: AboutBlock) {
 						<h2 className="mb-2.5 text-3xl font-semibold text-gray-900 md:text-5xl">{services.title}</h2>
 					</div>
 					<div>
-						<Image src={services.image.url} alt={services.image.alt || "Lanier Plumbing service showcase"} className="object-cover w-full mb-6 h-36 rounded-xl" width={576} height={144} />
+						<Image src={services.image.url} alt={services.image.alt || `${companyName} service showcase`} className="object-cover w-full mb-6 h-36 rounded-xl" width={576} height={144} />
 						<p className="text-gray-500">{services.description}</p>
 					</div>
 				</div>

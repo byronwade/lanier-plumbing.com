@@ -9,6 +9,11 @@ import type { Page } from "@/payload-types";
 type LayoutType = NonNullable<Page["layout"]>;
 type BaseBlock = Extract<LayoutType[number], { blockType: "testimonials" }>;
 
+interface Settings {
+	companyName?: string;
+	serviceArea?: string;
+}
+
 interface Platform {
 	platform: "google" | "yelp";
 	rating: number;
@@ -24,10 +29,16 @@ interface TestimonialsBlock extends BaseBlock {
 	title: string;
 	description: string;
 	platforms: Platform[];
+	settings?: Settings;
 }
 
 export default function Testimonials(props: TestimonialsBlock) {
-	const { title = "Testimonials", description = "Trust the plumbing company that hundreds of homeowners rely on. See what our satisfied customers have to say about our expert services.", platforms = [] } = props;
+	const { title = "Testimonials", description = "Trust the plumbing company that hundreds of homeowners rely on. See what our satisfied customers have to say about our expert services.", platforms = [], settings } = props;
+
+	const companyName = settings?.companyName || "Lanier Plumbing";
+	const serviceArea = settings?.serviceArea || "Gainesville";
+
+	const formattedDescription = description.replace("plumbing company", `${companyName}`);
 
 	const starRating = useMemo(
 		() => (
@@ -52,7 +63,7 @@ export default function Testimonials(props: TestimonialsBlock) {
 				<div className="flex flex-col items-start gap-12 sm:flex-row sm:items-center sm:justify-between sm:gap-16">
 					<div className="flex flex-col items-start flex-1 text-left">
 						<h2 className="mb-6 text-3xl font-bold text-primary sm:text-4xl">{title}</h2>
-						<p className="max-w-2xl mb-8 text-base text-muted-foreground sm:text-lg">{description}</p>
+						<p className="max-w-2xl mb-8 text-base text-muted-foreground sm:text-lg">{formattedDescription}</p>
 						<Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
 							View All Reviews
 						</Button>
@@ -60,7 +71,7 @@ export default function Testimonials(props: TestimonialsBlock) {
 					<div className="flex flex-col gap-8 sm:flex-row lg:gap-16">
 						{platforms.map((platform, index) => (
 							<div key={index} className="inline-block">
-								<Image src={platform.icon.url} alt={`${platform.platform} Reviews`} className="mb-4" width={24} height={24} />
+								<Image src={platform.icon.url} alt={`${platform.platform} Reviews for ${companyName}`} className="mb-4" width={24} height={24} />
 								<div className="flex items-center">
 									<div className="mr-4 text-sm font-semibold text-primary">{platform.rating} / 5</div>
 									{starRating}
