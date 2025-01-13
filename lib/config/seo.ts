@@ -125,6 +125,11 @@ export const getPageMetadata = unstable_cache(
 		const settings = await getSettings();
 		const baseUrl = settings?.siteURL || "https://lanier-plumbing.com";
 		const pageUrl = `${baseUrl}/${slug || ""}`;
+		console.log("[SEO Debug] getPageMetadata called with:", { page, slug });
+		console.log("[SEO Debug] Base metadata:", {
+			title: baseMetadata.title,
+			description: baseMetadata.description,
+		});
 
 		return {
 			...baseMetadata,

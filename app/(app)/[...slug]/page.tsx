@@ -2,7 +2,7 @@
 
 import { getPageBySlug } from "@/lib/actions/getPages";
 import { getPostBySlug } from "@/lib/actions/getPosts";
-import { getServiceBySlug, listAllServices } from "@/lib/actions/getServices";
+import { getServiceBySlug } from "@/lib/actions/getServices";
 import { getSettings } from "@/lib/actions/getSettings";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -24,7 +24,7 @@ const getCachedPageData = unstable_cache(
 				const settings = await getSettings();
 				if (!settings?.homePage) return null;
 
-				const homePageId = typeof settings.homePage === "number" ? settings.homePage : settings.homePage.id;
+				const homePageId = typeof settings.homePage === "object" ? settings.homePage.id : settings.homePage;
 				if (!homePageId) return null;
 
 				return await getPageBySlug("/");
@@ -100,13 +100,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 				type: "article",
 				publishedTime: post.data.createdAt,
 				authors: ["Lanier Plumbing Expert"],
-				images: post.data.image ? [{ url: post.data.image.url, alt: post.data.image.alt }] : undefined,
+				images: post.data.image?.url ? [{ url: post.data.image.url }] : undefined,
 			},
 			twitter: {
 				card: "summary_large_image",
 				title: post.data.title,
 				description: post.data.description,
-				images: post.data.image ? [post.data.image.url] : undefined,
+				images: post.data.image?.url ? [post.data.image.url] : undefined,
 			},
 			alternates: {
 				canonical: `https://lanier-plumbing.com/expert-plumbing-tips/${postSlug}`,
@@ -135,13 +135,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 				title: service.data.title,
 				description: service.data.description,
 				type: "website",
-				images: service.data.image ? [{ url: service.data.image.url, alt: service.data.image.alt }] : undefined,
+				images: service.data.image?.url ? [{ url: service.data.image.url }] : undefined,
 			},
 			twitter: {
 				card: "summary_large_image",
 				title: service.data.title,
 				description: service.data.description,
-				images: service.data.image ? [service.data.image.url] : undefined,
+				images: service.data.image?.url ? [service.data.image.url] : undefined,
 			},
 			alternates: {
 				canonical: `https://lanier-plumbing.com/lanier-plumbing-services/${serviceSlug}`,
@@ -161,7 +161,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 	const title = page.pageMeta?.title || page.title;
 	const description = page.pageMeta?.description || `Learn about our ${title.toLowerCase()} services and solutions.`;
-	const canonicalUrl = `https://lanier-plumbing.com/${slug}`;
 
 	return getMetadata({
 		title,
@@ -170,16 +169,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 			title,
 			description,
 			type: "website",
-			images: page.pageMeta?.image ? [{ url: page.pageMeta.image.url, alt: title }] : undefined,
+			images: page.pageMeta?.image?.url ? [{ url: page.pageMeta.image.url }] : undefined,
 		},
 		twitter: {
 			card: "summary_large_image",
 			title,
 			description,
-			images: page.pageMeta?.image ? [page.pageMeta.image.url] : undefined,
+			images: page.pageMeta?.image?.url ? [page.pageMeta.image.url] : undefined,
 		},
 		alternates: {
-			canonical: canonicalUrl,
+			canonical: `https://lanier-plumbing.com/${slug}`,
 		},
 	});
 }
@@ -195,8 +194,10 @@ function PostContent({
 		createdAt: string;
 		author: string;
 		image?: {
-			url: string;
+			url?: string;
+			id: string;
 			alt: string;
+			filename: string;
 		};
 	};
 }) {
